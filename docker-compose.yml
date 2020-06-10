@@ -10,12 +10,9 @@ services:
       - PUID=${PUID}
       - PGID=${GUID}
       - TZ=${TIMEZONE}
-      - URL=${DOMAIN}
-      - SUBDOMAINS=${SUBDOMAINS},
-      - VALIDATION=${VALIDATION}
-      - EMAIL=${EMAIL}
     volumes:
-      - ./config/nginx:/config
+      - ./config/development/nginx:/config
+      - ./src/:/var/www/html
     ports:
       - '${NGINX_HTTP_PORT}:80'
       - '${NGINX_HTTPS_PORT}:443'
