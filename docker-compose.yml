@@ -1,19 +1,25 @@
 version: '3'
 
 services:
-  base:
-    image: linuxserver/nginx
-    container_name: development
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    container_name: app
     cap_add:
       - NET_ADMIN
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
       - TZ=${TIMEZONE}
+      - URL=${DOMAIN}
+      - SUBDOMAINS=${SUBDOMAINS},
+      - VALIDATION=${VALIDATION}
+      - EMAIL=${EMAIL}
     volumes:
-      - ./config/development/nginx:/config
-      - ./src/:/var/www/html
+      - ./config/nginx:/config
+      - ./src:/app
     ports:
-      - '${NGINX_HTTP_PORT}:80'
-      - '${NGINX_HTTPS_PORT}:443'
+      - ${NGINX_HTTP_PORT}:80
+      - ${NGINX_HTTPS_PORT}:443
     restart: unless-stopped
