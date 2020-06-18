@@ -5,7 +5,12 @@ TIMEZONE=Europe/Amsterdam
 NGINX_HTTP_PORT=80
 NGINX_HTTPS_PORT=443
 DOMAIN=99linesofcode.nl
+EMAIL=3071062+99linesofcode@users.noreply.github.com
 SUBDOMAINS=www,
 VALIDATION=http
 
-EMAIL=3071062+99linesofcode@users.noreply.github.com
+MYSQL_ROOT_PASSWORD=MYSQL_ROOT_PASSWORD
+MYSQL_DATABASE=laravel
+MYSQL_USER=default
+MYSQL_PASSWORD=secret
+MARIADB_PORT=3306
