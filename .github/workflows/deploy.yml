@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start SSH Agent
+        uses: webfactory/ssh-agent@v0.3.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: SSH and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP}}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/current/config/nginx/www
+            docker exec app php artisan down --message="Upgrading.. Be with you shortly." --retry=60
+            git checkout master
+            git pull
+            docker run --rm -t -w /app -v $PWD:/app node:14-alpine bash -c "npm install && npm run prod"
+            composer install --optimize-autoloader --no-dev
+            docker exec php artisan migrate
+            docker exec php artisan up
