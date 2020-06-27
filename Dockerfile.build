@@ -1,24 +1,3 @@
-# Front end
-FROM node:14-alpine as front
+FROM linuxserver/letsencrypt
 
-WORKDIR /app
-RUN mkdir -p /app/public;
-
-COPY /src/package.json /src/package-lock.json /src/webpack.mix.js /src/tailwind.config.js /app/
-COPY /src/resources/ /app/resources/
-
-RUN npm install && npm run prod;
-
-# Base image
-FROM linuxserver/nginx
-
-WORKDIR /app
-
-COPY --chown=abc:users /src/ .
-COPY --chown=abc:users --from=front /app/public/css/ /public/css/
-COPY --chown=abc:users --from=front /app/public/js/ /public/js/
-
-RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    composer global require hirak/prestissimo --no-suggest --no-interaction;
-
-RUN composer install --optimize-autoloader --no-dev
+COPY root/ /

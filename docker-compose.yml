@@ -2,9 +2,7 @@ version: '3'
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile.build
+    image: linuxserver/nginx
     container_name: app
     cap_add:
       - NET_ADMIN
@@ -18,7 +16,6 @@ services:
       - EMAIL=${EMAIL}
     volumes:
       - ./config/nginx:/config
-      - ./src:/app
     ports:
       - ${NGINX_HTTP_PORT}:80
       - ${NGINX_HTTPS_PORT}:443
