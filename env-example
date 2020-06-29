@@ -1,4 +1,4 @@
-REPOSITORY=laravel-scaffolding
+REPOSITORY=
 
 PUID=1000
 GUID=1000
