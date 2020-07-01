@@ -15,9 +15,6 @@ if ! [ -x $(command -v docker) ]; then
   sudo apt update
   apt-cache policy docker-ce
   sudo apt install --no-install-recommends -y docker-ce docker-compose
-  echo "Installing Composer dependency manager.."
-  RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-      composer global require hirak/prestissimo --no-suggest --no-interaction;
 fi
 
 echo "All prerequisites installed. Continuing.."
