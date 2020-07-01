@@ -43,9 +43,13 @@ else
     echo "Project previously initialized. Continuing.."
   fi
 
-  if [ ! `docker ps -q -f name=app` ]; then
+  if [ -n `$(docker ps -q -f name=app)` ]; then
     echo "Starting Docker containers.."
-    docker-compose up -f docker-compose.yml -f docker-compose.prod.yml -d
+    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  else
+    echo "Restarting Docker containers.."
+    docker-compose down
+    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   fi
 
   if ! [ -f $PWD/config/nginx/www/.env ]; then
