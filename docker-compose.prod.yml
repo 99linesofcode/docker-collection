@@ -4,4 +4,4 @@ services:
   app:
     build:
       context: .
-      image: Dockerfile.build
+      dockerfile: Dockerfile.build
