@@ -27,9 +27,10 @@ if ! [ -f .env ]; then
   echo "Missing Docker dotenv file. Please copy and configure env-example before continuing."
   exit
 else
-  source .env && echo "Sourced .env"
+  echo "Sourcing Docker dotenv file.."
+  source .env
 
-  if [[ -z `ls -A $PWD/config/nginx/www` ]]; then
+  if [ -n "$(find /config/nginx/www -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
     if ! [[ -z $REPOSITORY ]]; then
       echo '$REPOSITORY not set. Please define the repository that should be pulled.'
       exit
