@@ -24,7 +24,7 @@ jobs:
             docker exec app php artisan down --message="Upgrading.. Be with you shortly." --retry=60
             git checkout master
             git pull
-            docker run --rm -t -w /app -v $PWD:/app node:14-alpine bash -c "npm install && npm run prod"
-            composer install --optimize-autoloader --no-dev
+            docker run --rm -t -w /app -v $PWD:/app node:14-alpine sh -c "npm install && npm run prod"
+            docker run --rm -t -v $PWD/config/nginx/www:/app composer install --optimize-autoloader --no-dev
             docker exec php artisan migrate
             docker exec php artisan up
