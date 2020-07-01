@@ -56,6 +56,7 @@ else
     if [ ! -f $PWD/config/nginx/www/.env ] && [ -f $PWD/config/nginx/www/.env.example ]; then
       cp $PWD/config/nginx/www/.env.example $PWD/config/nginx/www/.env
       docker run --rm -t -v $PWD/config/nginx/www:/app composer install
+      docker run --rm -t -w /app -v $PWD/config/nginx/www:/app node:14-alpine sh -c "npm install && npm run prod"
 
       if [ -z $(sed -n 's/^APP_KEY=//p' $PWD/config/nginx/www/.env) ]; then
         echo "Generating Laravel application key.."
