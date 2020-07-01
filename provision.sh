@@ -39,6 +39,7 @@ else
     echo "Project not yet initialized. Pulling $REPOSITORY from github.com.."
     mkdir -p $PWD/config/nginx/www
     git clone git@github.com:99linesofcode/$REPOSITORY.git $PWD/config/nginx/www
+    cp $PWD/config/nginx/www/.env.example $PWD/config/nginx/www/.env
   else
     echo "Project previously initialized. Continuing.."
   fi
@@ -52,12 +53,10 @@ else
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   fi
 
-  if ! [ -f $PWD/config/nginx/www/.env ]; then
-    echo "Copy .env file."
-    cp $PWD/config/nginx/www/.env.example $PWD/config/nginx/www/.env
-    echo "Generate application encryption key."
+  if [ -n $(sed -n 's/^APP_KEY=//p' $PWD/config/nginx/www/.env) ]; then
+    echo "Generating Laravel application key.."
     docker exec app php artisan key:generate
   fi
 fi
 
-echo "All fired up and ready to serve!"
+echo "Done. All fired up and ready to serve!"
