@@ -30,21 +30,20 @@ else
   echo "Sourcing Docker dotenv file.."
   source .env
 
-  if [ -n "$(find /config/nginx/www -maxdepth 0 -type d -empty 2>/dev/null)" ]; then
-    if ! [[ -z $REPOSITORY ]]; then
-      echo '$REPOSITORY not set. Please define the repository that should be pulled.'
-      exit
-    fi
+  if [ -z $REPOSITORY ]; then
+    echo '$REPOSITORY not set. Please define the repository that should be pulled.'
+    exit
+  fi
 
+  if [ -n $(find $PWD/config/nginx/www -maxdepth 0 -type d -empty 2>/dev/null) ]; then
     echo "Project not yet initialized. Pulling $REPOSITORY from github.com.."
     mkdir -p $PWD/config/nginx/www
     git clone git@github.com:99linesofcode/$REPOSITORY.git $PWD/config/nginx/www
-    cp $PWD/config/nginx/www/.env.example $PWD/config/nginx/www/.env
   else
-    echo "Project previously initialized. Continuing.."
+    echo "Project was previously pulled. Continuing.."
   fi
 
-  if [ -n `$(docker ps -q -f name=app)` ]; then
+  if [ -z $(docker ps -q -f name=app) ]; then
     echo "Starting Docker containers.."
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   else
@@ -53,9 +52,21 @@ else
     docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
   fi
 
-  if [ -n $(sed -n 's/^APP_KEY=//p' $PWD/config/nginx/www/.env) ]; then
-    echo "Generating Laravel application key.."
-    docker exec app php artisan key:generate
+  if grep -q "laravel/framework" $PWD/config/nginx/www/composer.json; then
+    if [ ! -f $PWD/config/nginx/www/.env ] && [ -f $PWD/config/nginx/www/.env.example ]; then
+      cp $PWD/config/nginx/www/.env.example $PWD/config/nginx/www/.env
+      docker run --rm -t -v $PWD/config/nginx/www:/app composer install
+
+      if [ -z $(sed -n 's/^APP_KEY=//p' $PWD/config/nginx/www/.env) ]; then
+        echo "Generating Laravel application key.."
+        docker exec app php artisan key:generate
+      fi
+    else
+      echo "Could not find .env.example to copy. Aborting.."
+      exit
+    fi
+  else
+    echo "$PWD/config/nginx/www does not appear to contain a Laravel project. Consider manual configuration."
   fi
 fi
 
