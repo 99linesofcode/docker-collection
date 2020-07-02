@@ -2,10 +2,12 @@ version: '3'
 
 services:
   app:
-    image: linuxserver/nginx
-    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile.base
     cap_add:
       - NET_ADMIN
+    container_name: linesofcode/app
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
@@ -23,7 +25,7 @@ services:
 
   mariadb:
     image: linuxserver/mariadb
-    container_name: mariadb
+    container_name: linesofcode/mariadb
     environment:
       - PUID=${PUID}
       - PGID=${GUID}

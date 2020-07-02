@@ -42,11 +42,11 @@ else
 
   if [ -z $(docker ps -q -f name=app) ]; then
     echo "Starting Docker containers.."
-    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+    docker-compose -f docker-compose.yml up -d
   else
     echo "Restarting Docker containers.."
     docker-compose down
-    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+    docker-compose -f docker-compose.yml up -d
   fi
 
   if grep -q "laravel/framework" $PWD/config/nginx/www/composer.json; then
