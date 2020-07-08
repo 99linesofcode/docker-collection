@@ -46,7 +46,7 @@ if [ -n $(find $PWD/config/nginx/www -maxdepth 0 -type d -empty 2>/dev/null) ]; 
   git clone git@github.com:99linesofcode/$REPOSITORY.git $PWD/config/nginx/www
 fi
 
-if [ -z $(docker ps -q -f name=app) ]; then
+if [ -z $(docker ps -q -f name=linesofcode.app) ]; then
   echo "Starting Docker containers.."
   docker-compose -f docker-compose.yml up -d
 else
@@ -72,7 +72,7 @@ if grep -q "laravel/framework" $PWD/config/nginx/www/composer.json; then
 
   if [ -z $(sed -n 's/^APP_KEY=//p' $PWD/config/nginx/www/.env) ]; then
     echo "Application key not set. Generating a new one.."
-    docker exec app php artisan key:generate
+    docker exec linesofcode.app php artisan key:generate
   fi
 
   echo "Installing Vue dependencies.."
