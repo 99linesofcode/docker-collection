@@ -72,7 +72,7 @@ if grep -q "laravel/framework" $PWD/config/nginx/www/composer.json; then
 
   if [ -z $(sed -n 's/^APP_KEY=//p' $PWD/config/nginx/www/.env) ]; then
     echo "Application key not set. Generating a new one.."
-    docker exec linesofcode.app php artisan key:generate
+    docker exec -w /config/www linesofcode.app php artisan key:generate
   fi
 
   echo "Installing Vue dependencies.."
