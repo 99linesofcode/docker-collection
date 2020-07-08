@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! [ -x $(command -v docker) ]; then
-  echo "[linesofcode.app] Installing prerequisite packages.."
+  echo "provision.sh | Installing prerequisite packages.."
   sudo apt update && apt install --no-install-recommends -y \
        apt-transport-https \
        ca-certificates \
@@ -9,7 +9,7 @@ if ! [ -x $(command -v docker) ]; then
        software-properties-common \
        git
   mkdir -p ~/current
-  echo "[linesofcode.app] Installing Docker and Docker Compose.."
+  echo "provision.sh | Installing Docker and Docker Compose.."
   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
   sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
   sudo apt update
@@ -17,16 +17,16 @@ if ! [ -x $(command -v docker) ]; then
   sudo apt install --no-install-recommends -y docker-ce docker-compose
 fi
 
-echo "[linesofcode.app] All prerequisites installed. Continuing.."
+echo "provision.sh | All prerequisites installed. Continuing.."
 cd ~/current
 
 if ! [ -f .env.example ]; then
-  echo "[linesofcode.app] $PWD/.env.example is missing. Cannot continue.."
+  echo "provision.sh | $PWD/.env.example is missing. Cannot continue.."
   exit
 fi
 
 if ! [ -f .env ]; then
-  echo "[linesofcode.app] Copying .env from $PWD/.env.example.."
+  echo "provision.sh | Copying .env from $PWD/.env.example.."
   cp .env.example .env
 fi
 
@@ -36,47 +36,46 @@ if [ -z $REPOSITORY ]; then
   echo '$REPOSITORY not defined. What repository do you want to pull?'
   read -p 'git@github.com:99linesofcode/' repo
   sed -i "s/REPOSITORY=.*/REPOSITORY=$repo/g" .env
+  source .env
 fi
 
-source .env
-
 if [ -n $(find $PWD/config/nginx/www -maxdepth 0 -type d -empty 2>/dev/null) ]; then
-  echo "[linesofcode.app] Pulling $REPOSITORY from github.com.."
+  echo "provision.sh | Pulling $REPOSITORY from github.com.."
   mkdir -p $PWD/config/nginx/www
   git clone git@github.com:99linesofcode/$REPOSITORY.git $PWD/config/nginx/www
 fi
 
 if [ -z $(docker ps -q -f name=linesofcode.app) ]; then
-  echo "[linesofcode.app] Starting Docker containers.."
+  echo "provision.sh | Starting Docker containers.."
   docker-compose -f docker-compose.yml up -d
 else
-  echo "[linesofcode.app] Restarting Docker containers.."
+  echo "provision.sh | Restarting Docker containers.."
   docker-compose down
   docker-compose -f docker-compose.yml up -d
 fi
 
 if grep -q "laravel/framework" $PWD/config/nginx/www/composer.json; then
-  echo "[linesofcode.app] $REPOSITORY looks to be a Laravel project. Configuring.."
+  echo "provision.sh | $REPOSITORY looks to be a Laravel project. Configuring.."
 
   if [ ! -f $PWD/config/nginx/www/.env ]; then
     if [ ! -f $PWD/config/nginx/www/.env.example ]; then
-      echo "[linesofcode.app] Cannot copy .env.example to .env. Make sure either exists."
+      echo "provision.sh | Cannot copy .env.example to .env. Make sure either exists."
       exit
     fi
 
     cp $PWD/config/nginx/www/.env.example $PWD/config/nginx/www/.env
   fi
 
-  echo "[linesofcode.app] Installing Composer dependencies.."
+  echo "provision.sh | Installing Composer dependencies.."
   docker run --rm -t -v $PWD/config/nginx/www:/app composer install
 
   if [ -z $(sed -n 's/^APP_KEY=//p' $PWD/config/nginx/www/.env) ]; then
-    echo "[linesofcode.app] Application key not set. Generating a new one.."
+    echo "provision.sh | Application key not set. Generating a new one.."
     docker exec -w /config/www linesofcode.app php artisan key:generate
   fi
 
-  echo "[linesofcode.app] Installing Vue dependencies.."
+  echo "provision.sh | Installing Vue dependencies.."
   docker run --rm -t -w /app -v $PWD/config/nginx/www:/app node:14-alpine sh -c "npm install && npm run prod"
 fi
 
-echo "[linesofcode.app] Done. All fired up and ready to serve!"
+echo "provision.sh | Done. All fired up and ready to serve!"
