@@ -39,7 +39,7 @@ if [ -z $REPOSITORY ]; then
   source .env
 fi
 
-if [ -n $(find $PWD/config/nginx/www -maxdepth 0 -type d -empty 2>/dev/null) ]; then
+if ! [[ -d $PWD/config/nginx/www && -n "$(ls -A $PWD/config/nginx/www)" ]]; then
   echo "provision.sh | Pulling $REPOSITORY from github.com.."
   mkdir -p $PWD/config/nginx/www
   git clone git@github.com:99linesofcode/$REPOSITORY.git $PWD/config/nginx/www
