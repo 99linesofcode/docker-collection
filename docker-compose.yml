@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.base
     cap_add:
       - NET_ADMIN
-    container_name: linesofcode/app
+    container_name: linesofcode.app
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
@@ -25,7 +25,7 @@ services:
 
   mariadb:
     image: linuxserver/mariadb
-    container_name: linesofcode/mariadb
+    container_name: linesofcode.mariadb
     environment:
       - PUID=${PUID}
       - PGID=${GUID}
