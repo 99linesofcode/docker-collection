@@ -38,6 +38,8 @@ if [ -z $REPOSITORY ]; then
   sed -i "s/REPOSITORY=.*/REPOSITORY=$repo/g" .env
 fi
 
+source .env
+
 if [ -n $(find $PWD/config/nginx/www -maxdepth 0 -type d -empty 2>/dev/null) ]; then
   echo "Pulling $REPOSITORY from github.com.."
   mkdir -p $PWD/config/nginx/www
