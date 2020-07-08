@@ -58,11 +58,13 @@ fi
 if grep -q "laravel/framework" $PWD/config/nginx/www/composer.json; then
   echo "$REPOSITORY looks to be a Laravel project. Configuring.."
 
-  if [ ! -f $PWD/config/nginx/www/.env ] && [ -f $PWD/config/nginx/www/.env.example ]; then
+  if [ ! -f $PWD/config/nginx/www/.env ]; then
+    if [ ! -f $PWD/config/nginx/www/.env.example ]; then
+      echo "Cannot copy .env.example to .env. Make sure either exists."
+      exit
+    fi
+
     cp $PWD/config/nginx/www/.env.example $PWD/config/nginx/www/.env
-  else
-    echo "$PWD/config/nginx/www/.env.example is missing. Make sure it exists before continuing."
-    exit
   fi
 
   echo "Installing Composer dependencies.."
