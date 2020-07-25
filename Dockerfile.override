@@ -1,3 +1,7 @@
 FROM linuxserver/nginx
 
 COPY root/override/ /
+
+RUN \
+ apk add --no-cache --upgrade \
+ php7-pecl-xdebug;

@@ -5,3 +5,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.override
+    extra_hosts:
+      - "docker-host:${IP}" # hostname -I
