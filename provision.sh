@@ -34,7 +34,7 @@ source .env
 
 if [ -z $REPOSITORY ]; then
   echo '$REPOSITORY not defined. What repository do you want to pull?'
-  read -p 'git@github.com:99linesofcode/' repo
+  read -p 'ie. 99linesofcode/docker-base' repo
   sed -i "s/REPOSITORY=.*/REPOSITORY=$repo/g" .env
   source .env
 fi
@@ -42,7 +42,7 @@ fi
 if ! [[ -d $PWD/config/nginx/www && -n "$(ls -A $PWD/config/nginx/www)" ]]; then
   echo "provision.sh | Pulling $REPOSITORY from github.com.."
   mkdir -p $PWD/config/nginx/www
-  git clone git@github.com:99linesofcode/$REPOSITORY.git $PWD/config/nginx/www
+  git clone git@github.com:$REPOSITORY.git $PWD/config/nginx/www
 fi
 
 if [ -z $(docker ps -q -f name=linesofcode.app) ]; then
