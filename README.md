@@ -18,3 +18,7 @@ So, you cloned the repository. As this project heavily depends upon the [linuxse
 Lastly, you want to get the repository onto your VPS. This is probably best done using secure file copy. Then, simply login to your server over SSH and execute `provision.sh` to configure and serve your project files.
 
 Your project and container configuration is bind mounted into the container and lives in the `~/current/config` directory.
+
+## Working
+
+Simply `source docker-aliases.sh` to regain access to the command-line tools you are used to working with (`artisan`, `composer`, `npm`).
