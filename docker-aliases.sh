@@ -11,5 +11,5 @@ function composer {
 }
 
 function npm {
-  docker run --rm -t -w $workdir -v $sourcedir:$workdir $node sh -c "npm $@"
+  docker run --rm -t -w $workdir -v $sourcedir:$workdir $node npm "$@"
 }
