@@ -1,7 +1,7 @@
 # Docker Base
-Interested in a bare metal Docker configuration to easily and more importantly safely serve your Laravel project with? Look no further.
+Interested in a bare metal Docker configuration to easily and more importantly securely serve your Laravel project with? Look no further.
 
-Docker base is build ontop of the well supported [linuxserver.io](https://linuxserver.io) images and is only minimally extended and configured to be used in both development and production environments. `docker-compose.override.yml` and the other override files are used for development. The production environment makes use of linuxserver.io [letsencrypt container](https://github.com/linuxserver/docker-letsencrypt).
+Docker base is build ontop of the well supported [linuxserver.io](https://linuxserver.io) images and is only minimally extended and configured to be used in both development and production environments. `docker-compose.override.yml` and the other override files are used for development. The production environment makes use of linuxserver.io's [swag container](https://github.com/linuxserver/docker-swag).
 
 The included `provision.sh` script is meant to be run once to get your VPS in the right state. Deployment is handled by the Github workflow `deploy.yml` file.
 
@@ -18,7 +18,3 @@ So, you cloned the repository. As this project heavily depends upon the [linuxse
 Lastly, you want to get the repository onto your VPS. This is probably best done using secure file copy. Then, simply login to your server over SSH and execute `provision.sh` to configure and serve your project files.
 
 Your project and container configuration is bind mounted into the container and lives in the `~/current/config` directory.
-
-## Working
-
-Simply `source docker-aliases.sh` to regain access to the command-line tools you are used to working with (`artisan`, `composer`, `npm`).
