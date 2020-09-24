@@ -1,3 +1,3 @@
-FROM linuxserver/letsencrypt
+FROM linuxserver/swag
 
 COPY root/base/ /
