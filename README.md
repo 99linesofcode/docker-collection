@@ -1,5 +1,5 @@
 # Docker Base
-Interested in a bare metal Docker configuration to easily and more importantly securely serve your Laravel project with? Look no further.
+Interested in a bare metal Docker configuration to easily and, more importantly, securely serve your Laravel project with? Look no further.
 
 Docker base is build ontop of the well supported [linuxserver.io](https://linuxserver.io) images and is only minimally extended and configured to be used in both development and production environments. `docker-compose.override.yml` and the other override files are used for development. The production environment makes use of linuxserver.io's [swag container](https://github.com/linuxserver/docker-swag).
 
@@ -18,3 +18,16 @@ So, you cloned the repository. As this project heavily depends upon the [linuxse
 Lastly, you want to get the repository onto your VPS. This is probably best done using secure file copy. Then, simply login to your server over SSH and execute `provision.sh` to configure and serve your project files.
 
 Your project and container configuration is bind mounted into the container and lives in the `~/current/config` directory.
+
+## Deployment
+
+Included you will find a Github Actions workflow file (`.github/deploy.yml`) which you can expand upon to automatically handle deployment when, in my case, a pull request is merged into `master`. To learn more about Github Actions, check out the official documentation here: https://docs.github.com/en/actions.
+
+I have it configured to:
+
+1. SSH into the box
+2. Put Laravel into maintenance mode
+3. Update PHP and node dependencies
+4. Compile assets
+5. Perform database migrations
+6. Bring the application back up
