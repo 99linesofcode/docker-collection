@@ -4,4 +4,7 @@ COPY root/override/ /
 
 RUN \
  apk add --no-cache --upgrade \
+ nodejs \
+ npm \
+ composer \
  php7-pecl-xdebug;
