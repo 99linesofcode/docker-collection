@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  app:
+    container_name: linesofcode.app
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - TZ=${TIMEZONE}
+    ports:
+      - ${NGINX_HTTP_PORT}:80
+      - ${NGINX_HTTPS_PORT}:443
+    restart: unless-stopped
+    volumes:
+      - ~/.config/${REPOSITORY}/nginx:/config
+
+  mariadb:
+    image: linuxserver/mariadb
+    container_name: linesofcode.mariadb
+    environment:
+      - PUID=${PUID}
+      - PGID=${GUID}
+      - TZ=${TIMEZONE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - ${DB_PORT}:3306
+    restart: unless-stopped
+    volumes:
+      - ~/.config/${REPOSITORY}/mariadb:/config
+
+  redis:
+    image: redis
+    container_name: linesofcode.redis
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - ~/.config/${REPOSITORY}/redis:/data
+
+networks:
+  default:
+    name: linesofcode.network

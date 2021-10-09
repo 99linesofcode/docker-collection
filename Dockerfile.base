@@ -1,0 +1,3 @@
+FROM linuxserver/swag
+
+COPY root/base/ /
