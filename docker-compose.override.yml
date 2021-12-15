@@ -16,8 +16,8 @@ services:
     image: 'mailhog/mailhog:latest'
     container_name: linesofcode.mailhog
     ports:
-      - ${MAILHOG_PORT:-1025}:1025
-      - ${MAILHOG_DASHBOARD_PORT:-8025}:8025
+      - ${MAIL_PORT:-1025}:1025
+      - ${MAIL_DASHBOARD_PORT:-8025}:8025
 
   phpmyadmin:
     image: phpmyadmin:latest
