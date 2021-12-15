@@ -1,20 +1,68 @@
-# Docker Base
-Interested in a bare metal Docker configuration to easily and, more importantly, securely serve your Laravel project with? Look no further.
+# Docker Development container
 
-Docker base is build ontop of the well supported [linuxserver.io](https://linuxserver.io) images and is only minimally extended and configured to be used in both development and production environments. `docker-compose.override.yml` and the other override files are used for development. The production environment makes use of linuxserver.io's [swag container](https://github.com/linuxserver/docker-swag).
+You stumbled upon my personal PHP/Laravel development and production containers meant to be used by those who for some reason cannot depend on Laravel Sail or Valet.
 
-The included `provision.sh` script is meant to be run once to get your VPS in the right state. Deployment is handled by the Github workflow `deploy.yml` file.
+Additionally this repository can be used as a starting point for a single server setup OR easily expanded upon for the more complicated projects. It deploys your production code ontop of Linuxserver.io's Secure Web Application Gateway containers built on Linux Alpine and bundled with `s6-overlay`, `certbot` and `fail2ban`.
 
-This setup is intended to be used as a starting point, getting your project up and running on a single VPS in no time so that you can focus on development and start thinking about the way your CI/CD pipeline should be configured for that particular project.
+## Starting and Stopping your containers
 
-I would love for this project to be extended to also serve as a base for larger scale applications that live in separate servers employing Kubernetes but my priorities lie elsewhere for the time being.
+The project is configured with sensible defaults for development and can be spun up by running `docker-compose up -d` inside whatever directory your `docker-compose .yml` files live. By default PHP will be served from port `80`. use `docker-compose down` to stop all running containers.
 
-## Configuration
+## Laravel environment configuration
 
-So, you cloned the repository. As this project heavily depends upon the [linuxserver.io](https://linuxserver.io) images, be sure to check out their documentation. You might also want to pop into their Discord server should you require help with their official images.
+Your application now lives inside a Docker container which means that, inside Laravel's environment file you will need to point your `MYSQL_HOST`, `REDIS_HOST`, `MAIL_PORT` variables to your container DNS names which Docker will resolve to the correct network IP address:
 
-`copy .env.example .env` and configure for the repository that you want to serve. Make sure that the domain name resolves (https://dnschecker.org/) and your email address is formatted correctly so that LetsEncrypt can validate the domain and issue your certificates. Leave the `PUID/GUID` as is (for now) and specify the correct login credentials for your database.
+```
+DB_HOST=linesofcode.mysql
+REDIS_HOST=linesofcode.redis
+MAIL_HOST=linesofcode.mailhog
+```
 
-Lastly, you want to get the repository onto your VPS. This is probably best done using secure file copy. Then, simply login to your server over SSH and execute `provision.sh` to configure and serve your project files.
+## XDebug
 
-Your project and container configuration is bind mounted into the container and lives in the `~/current/config` directory.
+XDebug3 comes pre-installed in development and listens on the default port `9003`. It can be enabled and disabled by setting the `FLY_XDEBUG_MODE` variable as can be see in the `.env.example` file.
+
+## SSH agent forwarding
+
+Your `$SSH_AGENT` is automatically volume mounted into the container enabling you to use `composer --no-interaction` and SSH keys inside the container.
+
+## Logging in and running PHP commands
+
+Use `docker-compose exec app bash` to login to the `app` container where you will find that your files live in the `/config/www` directory. Artisan and Composer can be run from the `/config/www/api`'s root directory.
+
+## Volume mounting config/
+
+All of the files that are used to configure these containers will be volume mounted to  your `$HOME` directory under `./config/<$REPOSITORY>`. This is also where your database files and logs can be found. As is Linuxserver.io convention. For more information see their documentation: <https://docs.linuxserver.io/general/running-our-containers#the-config-volume>
+
+## Contributing to docker-base
+
+We love your input and want to make contributing to this project as easy and transparent as possible, whether it's:
+
+- Reporting a bug
+- Discussing the current state of the code
+- Submitting a fix
+- Proposing new features
+- Becoming a maintainer
+
+### We Develop with Github
+
+We use Github to host code, to track and plan issues and feature requests, as well as accept pull requests.
+
+### We Use [Github Flow](https://docs.github.com/en/get-started/quickstart/github-flow), So All Code Changes Happen Through Pull Requests
+
+Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://docs.github.com/en/get-started/quickstart/github-flow)). We actively welcome your pull requests:
+
+1. Fork the repo and create your branch from `master`.
+2. If you've added code that should be tested, add tests.
+3. If you've changed APIs, update the documentation.
+4. Ensure the test suite passes.
+5. Make sure your code lints.
+6. Issue that pull request!
+
+## License
+
+Copyright (c) 99linesofcode. All rights reserved.
+
+Licensed under the [GPL](LICENSE) license in accordance with the [linuxserver.io](https://linuxserver.io) license requirements.
+
+By contributing, you agree that your contributions will be licensed under the GPL License.

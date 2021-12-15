@@ -4,38 +4,36 @@ services:
   app:
     container_name: linesofcode.app
     environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - TZ=${TIMEZONE}
+      - PUID=${PUID:-1000}
+      - PGID=${GUID:-1000}
+      - TZ=${TIMEZONE:-Europe/Amsterdam}
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
     ports:
-      - ${NGINX_HTTP_PORT}:80
-      - ${NGINX_HTTPS_PORT}:443
+      - ${NGINX_HTTP_PORT:-80}:80
+      - ${NGINX_HTTPS_PORT:-443}:443
     restart: unless-stopped
-    volumes:
-      - ~/.config/${REPOSITORY}/nginx:/config
 
-  mariadb:
-    image: linuxserver/mariadb
-    container_name: linesofcode.mariadb
+  mysql:
+    image: mysql:8.0.26
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: linesofcode.mysql
     environment:
-      - PUID=${PUID}
-      - PGID=${GUID}
-      - TZ=${TIMEZONE}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-laravel}
+      - MYSQL_USER=${MYSQL_USER:-default}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-secret}
     ports:
-      - ${DB_PORT}:3306
+      - ${DB_PORT:-3306}:3306
     restart: unless-stopped
     volumes:
-      - ~/.config/${REPOSITORY}/mariadb:/config
+      - ~/.config/${REPOSITORY}/mysql:/var/lib/mysql
 
   redis:
-    image: redis
+    image: redis:6-alpine
     container_name: linesofcode.redis
     ports:
-      - ${REDIS_PORT}:6379
+      - ${REDIS_PORT:-6379}:6379
     volumes:
       - ~/.config/${REPOSITORY}/redis:/data
 

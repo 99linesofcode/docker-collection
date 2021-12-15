@@ -4,7 +4,7 @@ server {
 
   server_name _;
 
-  root /config/www/public;
+  root /config/www/api/public;
   index index.php index.html index.htm;
 
   ssl_certificate /config/keys/cert.crt;
