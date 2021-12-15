@@ -9,7 +9,7 @@ services:
       - SSH_AUTH_SOCK=/config/ssh-agent
     volumes:
       - $SSH_AUTH_SOCK:/config/ssh-agent
-      - ../api:/config/www
+      - ../:/config/www
 
   adminer:
     image: adminer
