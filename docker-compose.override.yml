@@ -28,6 +28,7 @@ services:
       - MYSQL_USER=${MYSQL_USER:-default}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD:-secret}
       - PMA_HOST=linesofcode.mysql
+      - PMA_PMADB=phpmyadmin
     restart: unless-stopped
     ports:
       - ${PHPMYADMIN_PORT:-8080}:80
