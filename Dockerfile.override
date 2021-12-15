@@ -3,18 +3,20 @@ FROM linuxserver/nginx
 COPY root/override/ /
 
 RUN \
- apk add --no-cache --upgrade \
- openssh-client \
- neovim \
- nodejs \
- npm \
- composer \
- php7-pecl-xdebug \
- # BTTR deps
- php7-pecl-redis \
- imagemagick \
- php7-pecl-imagick \
- gifsicle \
- libjpeg-turbo-utils \
- optipng \
- php7-pcntl;
+  apk add --no-cache --upgrade \
+  openssh-client \
+  neovim \
+  nodejs \
+  npm \
+  composer \
+  php7-pecl-xdebug \
+  php7-pecl-redis \
+  # optional dependencies
+  imagemagick \
+  php7-pecl-imagick \
+  gifsicle \
+  libjpeg-turbo-utils \
+  optipng \
+  php7-pcntl \
+  graphviz \
+  ttf-freefont;
