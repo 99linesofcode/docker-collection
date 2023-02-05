@@ -24,7 +24,7 @@ services:
 
   node:
     container_name: ${APP_NAME}.node
-    image: 'node:${NODE_VERSION}-alpine'
+    image: 'node:${NODE_VERSION}'
     user: node
     working_dir: '/var/www/html/nuxt'
     extra_hosts:
