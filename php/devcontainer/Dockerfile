@@ -1,6 +1,8 @@
-FROM ubuntu:latest
+# syntax=docker/dockerfile:1
 
-LABEL maintainer="Jordy Schreuders"
+FROM ubuntu:22.04
+
+LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG PHP_DEPS="gnupg software-properties-common ca-certificates lsb-release apt-transport-https"
@@ -12,11 +14,11 @@ ENV TZ=UTC
 
 WORKDIR $HOME
 
-# General configuration
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Install base dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends $PHP_DEPS $VIM_DEPS \
+RUN \
+  echo "*** Installing base dependencies ***" \
+  apt-get update && apt-get install -y --no-install-recommends $PHP_DEPS $VIM_DEPS \
   build-essential \
   ssh \
   curl \
@@ -30,8 +32,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends $PHP_DEPS $VIM_
 # TODO extract neovim build to multi stage build
 # TODO extract everything PHP to dedicated devcontainer
 
-# Neovim
-RUN cd $HOME \
+RUN \
+  echo "*** Building and configuring Neovim ***" \
   && git clone https://github.com/neovim/neovim \
   && cd neovim \
   && make CMAKE_BUILD_TYPE=Release \
@@ -40,8 +42,8 @@ RUN cd $HOME \
   && cd $HOME \
   && rm -rf $HOME/neovim
 
-# Composer and PHP CLI
-RUN cd $HOME \
+RUN \
+  echo "*** Setting up PHP and Composer ***" \
   && mkdir -p .gnupg \
   && chmod 600 .gnupg \
   && echo "disable-ipv6" >> $HOME/.gnupg/dirmngr.conf \
@@ -53,14 +55,15 @@ RUN cd $HOME \
   && apt-get install -y --no-install-recommends php8.1-cli \
   && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Clean up build dependencies
-RUN apt-get -y remove $PHP_DEPS $VIM_DEPS \
+RUN \
+  echo "*** Cleaning up build dependencies ***" \
+  apt-get -y remove $PHP_DEPS $VIM_DEPS \
   && apt-get -y autoremove \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Setup developer environment
-RUN --mount=type=ssh cd $HOME \
+RUN --mount=type=ssh \
+  echo "*** Setting up development environment ***" \
   # Oh My Zsh
   && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
   && rm .zshrc \
@@ -74,4 +77,3 @@ RUN --mount=type=ssh cd $HOME \
   && ln -s ./dotfiles/.gitignore .gitignore \
   && ln -s ./dotfiles/.gitignore_global .gitignore_global \
   && ln -s ./dotfiles/.config .config
-

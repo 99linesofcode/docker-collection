@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1
+
 FROM php:8.1-cli-alpine
 
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"

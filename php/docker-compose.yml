@@ -45,7 +45,7 @@ services:
   php:
     container_name: ${APP_NAME}.php
     build:
-      context: ./docker/php/8.1
+      context: ./docker/php/cli/8.1
       dockerfile: Dockerfile
     working_dir: '/var/www/html'
     extra_hosts:
