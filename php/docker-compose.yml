@@ -19,6 +19,8 @@ services:
       - '/home/jordy/.npmrc:/root/.npmrc'
       - '/home/jordy/.config/composer/auth.json:/root/.config/composer/auth.json'
       - '.:/var/www/html'
+    networks:
+      hostnet: {}
 
   node:
     container_name: ${APP_NAME}.node
@@ -178,6 +180,9 @@ networks:
   default:
     name: '${APP_NAME}.net'
     driver: bridge
+  hostnet:
+    name: '${APP_NAME}.host'
+    external: true
 
 volumes:
   'vol.pgsql':
