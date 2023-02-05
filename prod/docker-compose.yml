@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  php:
+    container_name: ${APP_NAME}.php
+    build:
+      context: ./docker/php/8.1
+      dockerfile: Dockerfile
+    working_dir: '/var/www/html/api'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${APP_PORT:-80}:80'
+    environment:
+      WWWUSER: '${WWWUSER}'
+      XDEBUG_MODE: '${PHP_XDEBUG_MODE:-off}'
+      XDEBUG_CONFIG: '${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+    volumes:
+      - '.:/var/www/html/api'
+    command: '/usr/local/bin/php -d variables_order=EGPCS /var/www/html/api/artisan serve --host=0.0.0.0 --port=80'
+    depends_on:
+      - postgresql
+
+  postgresql:
+    container_name: ${APP_NAME}.postgresql
+    image: 'postgres:alpine'
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+      POSTGRES_USER: '${DB_USERNAME}'
+      POSTGRES_DB: '${DB_DATABASE}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'vol.pgsql:/var/lib/pgsql'
+      # - './vendor/laravel/sail/database/pqsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "sh -c 'pg_isready -U ${DB_USERNAME} -d ${DB_PASSWORD}'"
+        ]
+      retries: 3
+      timeout: 5s
+
+networks:
+  default:
+    name: '${APP_NAME}.net'
+    driver: bridge
+
+volumes:
+  'vol.pgsql':
+    name: '${APP_NAME}.vol.pgsql'
+    driver: local

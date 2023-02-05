@@ -7,8 +7,8 @@ LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 ARG DEBIAN_FRONTEND=noninteractive
 ARG PHP_DEPS="gnupg software-properties-common ca-certificates lsb-release apt-transport-https"
 ARG VIM_DEPS="ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip doxygen"
-ARG WWWUSER=1000
-ARG WWWGROUP=1000
+ARG PUID=1000
+ARG PGID=1000
 
 ENV TZ=UTC
 
