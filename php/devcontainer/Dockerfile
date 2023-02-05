@@ -18,7 +18,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN \
   echo "*** Installing base dependencies ***" \
-  apt-get update && apt-get install -y --no-install-recommends $PHP_DEPS $VIM_DEPS \
+  && apt-get update && apt-get install -y --no-install-recommends $PHP_DEPS $VIM_DEPS \
   build-essential \
   ssh \
   curl \
@@ -28,6 +28,7 @@ RUN \
   git \
   nodejs
 
+# TODO run as non root user with sudo
 # TODO what to do with nodejs dependency? Maybe leave it in global devcontainer
 # TODO extract neovim build to multi stage build
 # TODO extract everything PHP to dedicated devcontainer
@@ -44,8 +45,8 @@ RUN \
 
 RUN \
   echo "*** Setting up PHP and Composer ***" \
-  && mkdir -p .gnupg \
-  && chmod 600 .gnupg \
+  && mkdir -p $HOME/.gnupg \
+  && chmod 600 $HOME/.gnupg \
   && echo "disable-ipv6" >> $HOME/.gnupg/dirmngr.conf \
   && echo "keyserver hkp://keyserver.ubuntu.com:80" >> $HOME/.gnupg/dirmngr.conf \
   && gpg --recv-key 0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c \
@@ -66,14 +67,14 @@ RUN --mount=type=ssh \
   echo "*** Setting up development environment ***" \
   # Oh My Zsh
   && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-  && rm .zshrc \
+  && rm $HOME/.zshrc \
   # SSH
-  && mkdir .ssh \
-  && ssh-keyscan github.com >> .ssh/known_hosts \
+  && mkdir $HOME/.ssh \
+  && ssh-keyscan github.com >> $HOME/.ssh/known_hosts \
   # Dotfiles
-  && git clone git@github.com:99linesofcode/dotfiles.git \
-  && ln -s ./dotfiles/.zshrc .zshrc \
-  && ln -s ./dotfiles/.gitconfig .gitconfig \
-  && ln -s ./dotfiles/.gitignore .gitignore \
-  && ln -s ./dotfiles/.gitignore_global .gitignore_global \
-  && ln -s ./dotfiles/.config .config
+  && git clone git@github.com:99linesofcode/dotfiles.git $HOME/.config/dotfiles \
+  && ln -s $HOME/.config/dotfiles/.zshrc .zshrc \
+  && ln -s $HOME/.config/dotfiles/.gitconfig .gitconfig \
+  && ln -s $HOME/.config/dotfiles/.gitignore .gitignore \
+  && ln -s $HOME/.config/dotfiles/.gitignore_global .gitignore_global \
+  && ln -s $HOME/.config/dotfiles/.config .config
