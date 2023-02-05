@@ -14,10 +14,10 @@ services:
     working_dir: '/var/www/html'
     environment:
       - TZ=${TIMEZONE:-Europe/Amsterdam}
-      - SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
     tty: true
     volumes:
-      - $SSH_AUTH_SOCK:$SSH_AUTH_SOCK
+      - '/home/jordy/.npmrc:/root/.npmrc'
+      - '/home/jordy/.config/composer/auth.json:/root/.config/composer/auth.json'
       - '.:/var/www/html'
 
   node:
