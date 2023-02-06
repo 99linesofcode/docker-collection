@@ -1,0 +1,71 @@
+services:
+  devcontainer:
+    container_name: ${APP_NAME}.devcontainer
+    build:
+      context: ./php/devcontainer
+      dockerfile: Dockerfile
+      ssh:
+        - default
+    working_dir: '/var/www/html'
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TIMEZONE:-Europe/Amsterdam}
+    tty: true
+    volumes:
+      - '/home/${USER}/.npmrc:/root/.npmrc'
+      - '/home/${USER}/.config/composer/auth.json:/root/.config/composer/auth.json'
+      - '..:/var/www/html'
+    network_mode: "host"
+
+  node:
+    container_name: ${APP_NAME}.node
+    image: 'node:${NODE_VERSION}'
+    user: node
+    working_dir: '/var/www/html'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${FORWARD_NODE_PORT:-3000}:3000'
+      - '${FORWARD_VITE_PORT:-24678}:24678'
+    environment:
+      - NODE_ENV=${APP_ENV}
+      - NUXT_HOST=node
+      - NUXT_PORT=${FORWARD_NODE_PORT:-3000}
+    volumes:
+      - '../nuxt:/var/www/html'
+    command: 'npm run dev'
+    depends_on:
+      - php
+
+  php:
+    container_name: ${APP_NAME}.php
+    build:
+      context: ./php/8.1/cli
+      dockerfile: Dockerfile
+    working_dir: '/var/www/html'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${FORWARD_PHP_PORT:-80}:80'
+    environment:
+      XDEBUG_MODE: '${PHP_XDEBUG_MODE:-off}'
+      XDEBUG_CONFIG: '${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+    volumes:
+      - '../api:/var/www/html'
+    command: '/usr/local/bin/php -d variables_order=EGPCS /var/www/html/artisan serve --host=0.0.0.0 --port=80'
+    depends_on:
+      - postgresql
+      - redis
+      - meilisearch
+
+  pgadmin:
+    container_name: ${APP_NAME}.pgadmin
+    image: dpage/pgadmin4:latest
+    links:
+      - postgresql
+    environment:
+      PGADMIN_DEFAULT_EMAIL: '${DB_USERNAME}@host.com'
+      PGADMIN_DEFAULT_PASSWORD: '${DB_PASSWORD}'
+    ports:
+      - '${FORWARD_PGADMIN_PORT:-8888}:80'

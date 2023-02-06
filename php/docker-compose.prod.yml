@@ -1,0 +1,49 @@
+services:
+  swag:
+    container_name: ${APP_NAME}.swag
+    build:
+      context: ./php/swag
+      dockerfile: Dockerfile
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=Europe/Amsterdam
+      - URL=99linesofcode.nl
+      - SUBDOMAINS=www,
+      - CERTPROVIDER=zerossl
+      - EMAIL=99linesofcode@gmail.com
+      - VALIDATION=http
+    ports:
+      - 80:80
+      - 443:443
+    # volumes:
+    #   - './config/swag:/config'
+    depends_on:
+      - php
+
+  php:
+    container_name: ${APP_NAME}.php
+    build:
+      context: ./php/8.1/fpm
+      dockerfile: Dockerfile
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    volumes:
+      - '../api:/app/www'
+    depends_on:
+      - postgresql
+      - redis
+      - meilisearch
+
+networks:
+  default:
+    name: '${APP_NAME}.net'
+    driver: bridge
+
+volumes:
+  'vol.pgsql':
+    name: '${APP_NAME}.vol.pgsql'
+    driver: local
