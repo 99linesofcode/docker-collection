@@ -6,13 +6,12 @@ services:
     build:
       context: ./devcontainer
       dockerfile: Dockerfile
-      args:
-        - PUID=${PUID:-1000}
-        - PGID=${PGID:-1000}
       ssh:
         - default
     working_dir: '/var/www/html'
     environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
       - TZ=${TIMEZONE:-Europe/Amsterdam}
     tty: true
     volumes:

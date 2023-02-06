@@ -9,16 +9,19 @@ ARG PHP_DEPS="gnupg software-properties-common ca-certificates lsb-release apt-t
 ARG VIM_DEPS="ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip doxygen"
 ARG PUID=1000
 ARG PGID=1000
+ARG HOME=/config
+ARG SUDO=docker
 
 ENV TZ=UTC
 
 WORKDIR $HOME
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 RUN \
-  echo "*** Installing base dependencies ***" \
-  && apt-get update && apt-get install -y --no-install-recommends $PHP_DEPS $VIM_DEPS \
+  echo "*** Setup timezone ***" && \
+  ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+  echo "*** Installing base dependencies ***" && \
+  apt-get update && apt-get install -y --no-install-recommends $PHP_DEPS $VIM_DEPS \
+  sudo \
   build-essential \
   ssh \
   curl \
@@ -28,19 +31,16 @@ RUN \
   git \
   nodejs
 
-# TODO run as non root user with sudo
 # TODO what to do with nodejs dependency? Maybe leave it in global devcontainer
-# TODO extract neovim build to multi stage build
-# TODO extract everything PHP to dedicated devcontainer
+# TODO extract base image and dedicated PHP containers
 
 RUN \
   echo "*** Building and configuring Neovim ***" \
   && git clone https://github.com/neovim/neovim \
   && cd neovim \
-  && make CMAKE_BUILD_TYPE=Release \
-  && make install \
-  && ln -s /usr/local/bin/nvim /usr/local/bin/vim \
-  && cd $HOME \
+  && sudo make CMAKE_BUILD_TYPE=Release \
+  && sudo make CMAKE_INSTALL_PREFIX=$HOME/.local/bin/nvim install \
+  && ln -s $HOME/.local/bin/nvim $HOME/.local/bin/vim \
   && rm -rf $HOME/neovim
 
 RUN \
