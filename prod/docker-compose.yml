@@ -1,0 +1,73 @@
+name: 'docker-base-php'
+
+# TODO testen met bestaande laravel applicatie
+# TODO doet xdebug het met NGINX ertussen?
+# TODO moet ik de extra host nog wel forwarden?
+
+services:
+  swag:
+    container_name: ${APP_NAME}.swag
+    build:
+      context: ./swag
+      dockerfile: Dockerfile
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=Europe/Amsterdam
+      - URL=99linesofcode.nl
+      - SUBDOMAINS=wildcard
+      - VALIDATION=dns
+      - DNSPLUGIN=cloudflare
+    ports:
+      - 80:80
+      - 433:433
+    volumes:
+      - './swag/config:/config'
+    depends_on:
+      - heimdall
+
+  heimdall:
+    container_name: ${APP_NAME}.heimdall
+    build:
+      context: ./php/8.1
+      dockerfile: Dockerfile
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+    volumes:
+      - '../api:/app/www'
+    depends_on:
+      - postgresql
+
+  postgresql:
+    container_name: ${APP_NAME}.postgresql
+    image: 'postgres:alpine'
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+      POSTGRES_USER: '${DB_USERNAME:-default}'
+      POSTGRES_DB: '${DB_DATABASE:-docker-base}'
+    volumes:
+      - 'vol.pgsql:/var/lib/pgsql'
+      # - './vendor/laravel/sail/database/pqsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "sh -c 'pg_isready -U ${DB_USERNAME} -d ${DB_PASSWORD}'"
+        ]
+      retries: 3
+      timeout: 5s
+
+networks:
+  default:
+    name: '${APP_NAME}.net'
+    driver: bridge
+
+volumes:
+  'vol.pgsql':
+    name: '${APP_NAME}.vol.pgsql'
+    driver: local
