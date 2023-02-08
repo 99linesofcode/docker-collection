@@ -4,19 +4,21 @@ services:
     build:
       context: ./php/devcontainer
       dockerfile: Dockerfile
-      ssh:
-        - default
-    working_dir: '/var/www/html'
+      # TODO this allows the SSH agent to be shared with the dockerfile
+      # ssh:
+      #   - default
+    working_dir: '/config/www'
     environment:
+      # FIXME I think this environment variable is not being read correctly
+      - PHP_VERSION=8.0
       - PUID=${PUID:-1000}
       - PGID=${PGID:-1000}
       - TZ=${TIMEZONE:-Europe/Amsterdam}
     tty: true
     volumes:
-      - '/home/${USER}/.npmrc:/root/.npmrc'
-      - '/home/${USER}/.config/composer/auth.json:/root/.config/composer/auth.json'
-      - '..:/var/www/html'
-    network_mode: "host"
+      - '/home/${USER:-jordy}/.npmrc:/root/.npmrc'
+      - '/home/${USER:-jordy}/.config/composer/auth.json:/root/.config/composer/auth.json'
+      - '/home/jordy/Development/bttr/klikvrijwilligers/nuxt:/config/www'
 
   node:
     container_name: ${APP_NAME}.node
