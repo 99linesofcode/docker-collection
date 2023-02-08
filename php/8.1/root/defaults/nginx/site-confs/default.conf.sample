@@ -1,25 +1,18 @@
-# redirect all traffic to https
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    location / {
-        return 301 https://$host$request_uri;
-    }
-}
-
-# main server block
-server {
     listen 443 ssl http2 default_server;
     listen [::]:443 ssl http2 default_server;
 
     server_name _;
 
-    root /config/www;
+    root /config/www/public;
     index index.html index.htm index.php;
 
-    # enable subfolder method reverse proxy confs
-    include /config/nginx/proxy-confs/*.subfolder.conf;
+    location / {
+        try_files $uri $uri/ /index.html /index.php$is_args$args;
+    }
 
     location ~ ^(.+\.php)(.*)$ {
         fastcgi_split_path_info ^(.+\.php)(.*)$;
@@ -33,8 +26,3 @@ server {
         deny all;
     }
 }
-
-# enable subdomain method reverse proxy confs
-include /config/nginx/proxy-confs/*.subdomain.conf;
-# enable proxy cache for auth
-proxy_cache_path cache/ keys_zone=auth_cache:10m;
