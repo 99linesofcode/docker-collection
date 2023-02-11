@@ -2,7 +2,7 @@ services:
   devcontainer:
     container_name: ${APP_NAME}.devcontainer
     build:
-      context: ./php/devcontainer
+      context: ./devcontainer
       dockerfile: Dockerfile
       # See https://docs.docker.com/compose/compose-file/build/#ssh
       ssh:
@@ -10,7 +10,7 @@ services:
     working_dir: '/config/www'
     # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
     environment:
-      - PHP_VERSION=php${PHP_VERSION}
+      - PHP_VERSION=php$${PHP_VERSION}
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE:-Europe/Amsterdam}
