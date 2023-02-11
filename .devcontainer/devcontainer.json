@@ -1,0 +1,38 @@
+// https://aka.ms/devcontainer.json
+{
+  "name": "devcontainer.json",
+  "dockerComposeFile": "../php/docker-compose.yml",
+  "service": "devcontainer",
+  "remoteUser": "abc",
+  "workspaceFolder": "/config/www",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "zsh"
+          }
+        },
+        "php-cs-fixer.config": "${containerWorkspaceFolder}/api/.php-cs-fixer.dist.php",
+        "php-cs-fixer.executablePath": "php-cs-fixer"
+      },
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "editorconfig.editorconfig",
+        "eamodio.gitlens",
+        "graphql.vscode-graphql",
+        "gruntfuggly.todo-tree",
+        "junstyle.php-cs-fixer",
+        "mikestead.dotenv",
+        "ms-azuretools.vscode-docker",
+        "naumovs.color-highlight",
+        "neilbrayfield.php-docblocker",
+        "stylelint.vscode-stylelint",
+        "vue.volar",
+        "xdebug.php-debug"
+      ]
+    }
+  }
+}
