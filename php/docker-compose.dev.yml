@@ -2,23 +2,29 @@ services:
   devcontainer:
     container_name: ${APP_NAME}.devcontainer
     build:
-      context: ./php/devcontainer
+      context: ./devcontainer
       dockerfile: Dockerfile
-      # TODO this allows the SSH agent to be shared with the dockerfile
-      # ssh:
-      #   - default
+      # See https://docs.docker.com/compose/compose-file/build/#ssh
+      ssh:
+        - default
     working_dir: '/config/www'
+    # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
     environment:
-      # FIXME I think this environment variable is not being read correctly
-      - PHP_VERSION=8.0
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
+      - PHP_VERSION=php$${PHP_VERSION}
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=${TIMEZONE:-Europe/Amsterdam}
     tty: true
     volumes:
-      - '/home/${USER:-jordy}/.npmrc:/root/.npmrc'
-      - '/home/${USER:-jordy}/.config/composer/auth.json:/root/.config/composer/auth.json'
-      - '/home/jordy/Development/bttr/klikvrijwilligers/nuxt:/config/www'
+      - '/home/${USER}/.npmrc:/root/.npmrc'
+      - '/home/${USER}/.config/composer/auth.json:/root/.config/composer/auth.json'
+
+  php:
+    environment:
+      - XDEBUG_MODE=${PHP_XDEBUG_MODE:-off}
+      - XDEBUG_CONFIG=${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}
+    # volumes:
+    #   - '/PATH_TO_PROJECT_DIRECTORY_HERE:/config/www'
 
   node:
     container_name: ${APP_NAME}.node
@@ -40,43 +46,21 @@ services:
     depends_on:
       - php
 
-  php:
-    container_name: ${APP_NAME}.php
-    build:
-      context: ./php/8.0
-      dockerfile: Dockerfile
-    working_dir: '/app/www'
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    ports:
-      - '${FORWARD_PHP_PORT:-80}:80'
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ${APP_NAME}.phpmyadmin
     environment:
-      - PUID=${PUID:-1000}
-      - PGID=${PGID:-1000}
-      - XDEBUG_MODE=${PHP_XDEBUG_MODE:-off}
-      - XDEBUG_CONFIG=${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}
-    volumes:
-      - '/home/jordy/Development/bttr/klikvrijwilligers/api:/config/www'
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - PMA_HOST=${APP_NAME}.mysql
+      - PMA_PMADB=phpmyadmin
+      - UPLOAD_LIMIT=512M
+    restart: unless-stopped
+    ports:
+      - ${PHPMYADMIN_PORT:-8888}:80
     depends_on:
-      - meilisearch
       - mysql
-      - redis
-
-    phpmyadmin:
-      image: phpmyadmin:latest
-      container_name: ${APP_NAME}.phpmyadmin
-      environment:
-        - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-        - MYSQL_USER=${DB_USERNAME}
-        - MYSQL_PASSWORD=${DB_PASSWORD}
-        - PMA_HOST=${APP_NAME}.mysql
-        - PMA_PMADB=phpmyadmin
-        - UPLOAD_LIMIT=512M
-      restart: unless-stopped
-      ports:
-        - ${PHPMYADMIN_PORT:-8888}:80
-      depends_on:
-        - mysql
 
   mailhog:
     container_name: ${APP_NAME}.mailhog

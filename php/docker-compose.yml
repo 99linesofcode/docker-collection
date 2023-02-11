@@ -1,6 +1,25 @@
 name: 'docker-base'
 
 services:
+  php:
+    container_name: ${APP_NAME}.php
+    build:
+      context: ./8.1
+      dockerfile: Dockerfile
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${FORWARD_PHP_HTTP_PORT:-80}:80'
+      - '${FORWARD_PHP_HTTPS_PORT:-443}:443'
+    environment:
+      - PHP_VERSION=php$${PHP_VERSION/./}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    depends_on:
+      - meilisearch
+      - mysql
+      - redis
+
   mysql:
     container_name: ${APP_NAME}.mysql
     image: 'mysql/mysql-server:8.0'
