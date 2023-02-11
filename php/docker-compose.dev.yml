@@ -10,7 +10,7 @@ services:
     working_dir: '/config/www'
     # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
     environment:
-      - PHP_VERSION=php$${PHP_VERSION}
+      - PHP_VERSION=8.1
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE:-Europe/Amsterdam}
@@ -28,7 +28,7 @@ services:
 
   node:
     container_name: ${APP_NAME}.node
-    image: 'node:${NODE_VERSION}'
+    image: 'node:18.13.0'
     user: node
     working_dir: '/var/www/html'
     extra_hosts:
