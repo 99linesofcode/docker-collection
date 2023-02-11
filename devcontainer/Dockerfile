@@ -10,13 +10,12 @@ ARG PUID=1000
 ARG PGID=1000
 ARG VIM_DEPS="ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip doxygen"
 
-ENV TZ=UTC
+ENV TZ="Europe/Amsterdam"
 
 RUN \
   ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ >> /etc/timezone \
   && echo "*** Install base dependencies ***" \
-  apt-get update && apt-get install -y --no-install-recommends \
-  $VIM_DEPS \
+  && apt-get update && apt-get install -y --no-install-recommends \
   gnupg \
   software-properties-common \
   ca-certificates \
@@ -26,13 +25,15 @@ RUN \
   ssh \
   curl \
   git \
+  $VIM_DEPS \
   fzf \
   ripgrep \
   zsh \
-  && echo "*** Setup container user ***" \
+  && echo "*** Set up container user ***" \
   && useradd -u $PUID -U -d /config -s /bin/zsh -G users $USER \
   && echo "abc ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USER \
   && chmod 0440 /etc/sudoers.d/$USER \
+  && mkdir -p /app /config/.local/bin /defaults \
   && echo "*** Build Neovim from source ***" \
   && cd /config \
   && git clone https://github.com/neovim/neovim \
@@ -40,7 +41,12 @@ RUN \
   && make CMAKE_BUILD_TYPE=Release \
   && make CMAKE_INSTALL_PREFIX=/config/.local/bin/nvim install \
   && ln -s /config/.local/bin/nvim /config/.local/bin/vim \
-  && rm -rf /config/neovim
+  && rm -rf /config/neovim \
+  && echo "*** Cleaning up build dependencies ***" \
+  && apt-get -y remove $VIM_DEPS \
+  && apt-get -y autoremove \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # TODO reconsider how to setup and configure the development environment
 # RUN --mount=type=ssh \
