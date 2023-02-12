@@ -4,11 +4,8 @@ services:
   php:
     container_name: ${APP_NAME}.php
     build:
-      context: ./bttr
+      context: ./php/8.1
       dockerfile: Dockerfile
-      args:
-        - PACKAGE_VERSION=8.0
-        - PHP_VERSION=80
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:

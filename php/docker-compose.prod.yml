@@ -2,8 +2,10 @@ services:
   swag:
     container_name: ${APP_NAME}.swag
     build:
-      context: ./php/swag
+      context: ./swag
       dockerfile: Dockerfile
+      args:
+        - PACKAGE_VERSION=latest
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
