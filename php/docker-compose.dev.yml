@@ -18,13 +18,14 @@ services:
     volumes:
       - '/home/${USER}/.npmrc:/root/.npmrc'
       - '/home/${USER}/.config/composer/auth.json:/root/.config/composer/auth.json'
+      - '/home/jordy/Development/bttr/${APP_NAME}:/config/www'
 
   php:
     environment:
       - XDEBUG_MODE=${PHP_XDEBUG_MODE:-off}
       - XDEBUG_CONFIG=${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}
-    # volumes:
-    #   - '/PATH_TO_PROJECT_DIRECTORY_HERE:/config/www'
+    volumes:
+      - '/home/jordy/Development/bttr/${APP_NAME}/api:/config/www'
 
   node:
     container_name: ${APP_NAME}.node
