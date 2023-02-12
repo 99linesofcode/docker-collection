@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM ubuntu:22.04
+ARG PACKAGE_VERSION="22.04"
+
+FROM ubuntu:$PACKAGE_VERSION
 
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
@@ -8,10 +10,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=abc
 ARG PUID=1000
 ARG PGID=1000
+ARG NEOVIM_VERSION="nightly"
 
 ENV TZ="Europe/Amsterdam"
-ENV NEOVIM_VERSION="nightly"
-ENV NODE_VERSION="lts"
 
 SHELL ["/bin/bash", "-c"]
 
@@ -28,7 +29,6 @@ RUN \
   ssh \
   curl \
   git \
-  $VIM_DEPS \
   fzf \
   ripgrep \
   zsh \
@@ -42,8 +42,10 @@ RUN \
   && source /config/.asdf/asdf.sh \
   && asdf plugin add neovim https://github.com/richin13/asdf-neovim.git \
   && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
-  && asdf install nodejs $NODE_VERSION \
   && asdf install neovim $NEOVIM_VERSION \
+  && echo "*** Install nodejs versions ***" \
+  && asdf install nodejs 16.19.0 \
+  && asdf install nodejs 18.14.0 \
   && echo "*** Cleaning up build dependencies ***" \
   && apt-get -y autoremove \
   && apt-get clean \

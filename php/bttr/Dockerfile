@@ -6,9 +6,10 @@ FROM ghcr.io/99linesofcode/php:$PACKAGE_VERSION
 
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
+ARG PHP_VERSION="81"
+
 # https://github.com/just-containers/s6-overlay#customizing-s6-behaviour
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
-ENV PHP_VERSION="81"
 
 RUN \
   echo "*** Install BTTR dependencies ***" && \

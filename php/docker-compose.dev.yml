@@ -7,10 +7,12 @@ services:
       # See https://docs.docker.com/compose/compose-file/build/#ssh
       ssh:
         - default
+      args:
+        - PACKAGE_VERSION=8.0
+        - PHP_VERSION=8.0
     working_dir: '/config/www'
     # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
     environment:
-      - PHP_VERSION=8.1
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TIMEZONE:-Europe/Amsterdam}
@@ -29,7 +31,7 @@ services:
 
   node:
     container_name: ${APP_NAME}.node
-    image: 'node:18.13.0'
+    image: 'node:16.19.0'
     user: node
     working_dir: '/var/www/html'
     extra_hosts:
