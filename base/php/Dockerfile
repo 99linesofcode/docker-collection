@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG PACKAGE_VERSION=3.17
+ARG PACKAGE_VERSION="3.17"
 
 FROM ghcr.io/linuxserver/baseimage-alpine-nginx:$PACKAGE_VERSION
 
