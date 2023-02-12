@@ -5,10 +5,14 @@ FROM ghcr.io/99linesofcode/devcontainer:latest
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
+# ARG BUILD_DEPS="autoconf bison gettext libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmysqlclient-dev libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev"
 
 ENV PHP_VERSION="8.1"
 
+SHELL ["/bin/bash", "-c"]
+
 RUN \
+  # TODO swap to asdf install once issues with the plugin have been resolved
   echo "*** Set up PHP and Composer ***" \
   && mkdir -p $HOME/.gnupg \
   && chmod 600 $HOME/.gnupg \
@@ -20,6 +24,18 @@ RUN \
   && apt-get update && apt-get install -y --no-install-recommends \
   php$PHP_VERSION-cli \
   && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer
+
+# && echo "*** Install PHP through ASDF ***" \
+# && apt-get update && apt-get install -y --no-install-recommends \
+# $BUILD_DEPS \
+# && source /config/.asdf/asdf.sh \
+# && asdf plugin-add php https://github.com/asdf-community/asdf-php.git \
+# && asdf install php PHP_VERSION \
+# && echo "*** Cleaning up build dependencies ***" \
+# && apt-get -y remove $BUILD_DEPS \
+# && apt-get -y autoremove \
+# && apt-get clean \
+# && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER $USER
 
