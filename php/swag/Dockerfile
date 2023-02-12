@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/swag
+ARG PACKAGE_VERSION="latest"
+
+FROM ghcr.io/linuxserver/swag:$PACKAGE_VERSION
 
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 

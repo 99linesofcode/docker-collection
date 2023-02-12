@@ -1,13 +1,14 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/99linesofcode/devcontainer:latest
+ARG PACKAGE_VERSION="latest"
+
+FROM ghcr.io/99linesofcode/devcontainer:$PACKAGE_VERSION
 
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG PHP_VERSION="8.1"
 # ARG BUILD_DEPS="autoconf bison gettext libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmysqlclient-dev libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev"
-
-ENV PHP_VERSION="8.1"
 
 SHELL ["/bin/bash", "-c"]
 

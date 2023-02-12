@@ -1,0 +1,23 @@
+name: 'docker-base'
+
+services:
+  php:
+    container_name: ${APP_NAME}.php
+    build:
+      context: ./bttr
+      dockerfile: Dockerfile
+      args:
+        - PACKAGE_VERSION=8.0
+        - PHP_VERSION=80
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${FORWARD_PHP_HTTP_PORT:-80}:80'
+      - '${FORWARD_PHP_HTTPS_PORT:-443}:443'
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+    depends_on:
+      - meilisearch
+      - mysql
+      - redis

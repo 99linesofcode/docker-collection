@@ -2,8 +2,10 @@ services:
   swag:
     container_name: ${APP_NAME}.swag
     build:
-      context: ./php/swag
+      context: ./swag
       dockerfile: Dockerfile
+      args:
+        - PACKAGE_VERSION=latest
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -16,14 +18,8 @@ services:
     ports:
       - '${FORWARD_PHP_HTTP_PORT:-80}:80'
       - '${FORWARD_PHP_HTTPS_PORT:-443}:443'
-    # volumes:
-    #   - './config/swag:/config'
     depends_on:
       - php
-
-  php:
-    # volumes:
-    #   - '/PATH_TO_PROJECT_DIRECTORY_HERE:/config/www'
 
 networks:
   default:

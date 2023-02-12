@@ -1,12 +1,15 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.17
+ARG PACKAGE_VERSION="3.17"
+
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:$PACKAGE_VERSION
 
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
+ARG PHP_VERSION="81"
+
 # https://github.com/just-containers/s6-overlay#customizing-s6-behaviour
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
-ENV PHP_VERSION="81"
 
 RUN \
   echo "*** Installing runtime packages ***" && \
