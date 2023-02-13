@@ -47,6 +47,14 @@ RUN \
   php$PHP_VERSION-xml \
   php$PHP_VERSION-xdebug \
   php$PHP_VERSION-zip \
+  libjpeg-turbo8-dev \
+  libjpeg-turbo-progs \
+  libxslt1-dev \
+  imagemagick \
+  optipng \
+  gifsicle \
+  php$PHP_VERSION-imagick \
+  php$PHP_VERSION-xsl \
   && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer
 
 # && echo "*** Install PHP through ASDF ***" \
@@ -66,5 +74,6 @@ USER $USER
 RUN \
   echo "*** Setting up user environment ***" \
   && sudo chown -R $USER:$USER /app /config /defaults \
+  && ls -la /config \
   # TODO this can probably be handled in .zshrc later on
   && export PATH="$HOME/.local/bin:$PATH"
