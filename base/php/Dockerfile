@@ -34,3 +34,5 @@ RUN \
   php$PHP_VERSION-mbstring \
   php$PHP_VERSION-openssl \
   php$PHP_VERSION-xml
+
+COPY root/ /
