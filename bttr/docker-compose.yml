@@ -18,8 +18,8 @@ services:
       - TZ=${TIMEZONE:-Europe/Amsterdam}
     tty: true
     volumes:
-      - '/home/${USER}/.npmrc:/root/.npmrc'
-      - '/home/${USER}/.config/composer/auth.json:/root/.config/composer/auth.json'
+      - '/home/${USER}/.npmrc:/root/.npmrc:ro'
+      - '/home/${USER}/.config/composer/auth.json:/config/.config/composer/auth.json:ro'
       - '/home/jordy/Development/bttr/${APP_NAME}:/config/www'
 
   php:
