@@ -28,6 +28,8 @@ RUN \
   gnupg \
   ssh \
   curl \
+  zip \
+  unzip \
   git \
   fzf \
   ripgrep \
