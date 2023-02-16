@@ -16,9 +16,10 @@ services:
       - TZ=${TIMEZONE:-Europe/Amsterdam}
     tty: true
     volumes:
-      - '/home/${USER}/.npmrc:/root/.npmrc:ro'
-      - '/home/${USER}/.config/composer/auth.json:/config/.config/composer/auth.json:ro'
-      - '/home/jordy/Development/bttr/${APP_NAME}:/config/www'
+      - '$HOME/.ssh:/config/.ssh'
+      - '$HOME/.npmrc:/root/.npmrc'
+      - '$HOME/.config/composer/auth.json:/config/.config/composer/auth.json'
+      - '$HOME/Development/bttr/${APP_NAME}:/config/www'
 
   php:
     container_name: ${APP_NAME}.php
@@ -39,16 +40,16 @@ services:
       - XDEBUG_MODE=${PHP_XDEBUG_MODE:-off}
       - XDEBUG_CONFIG=${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}
     volumes:
-      - '/home/jordy/Development/bttr/${APP_NAME}/api:/config/www'
+      - '$HOME/Development/bttr/${APP_NAME}/api:/config/www'
     depends_on:
       - meilisearch
       - mysql
       - redis
 
-  # TODO serve different urls for process.browser and SSR before we can migrate to a containerized node version
+  # FIXME serve different urls for process.browser and SSR before we can migrate to a containerized node version
   # node:
   #   container_name: ${APP_NAME}.node
-  #   image: 'node:14.21.1'
+  #   image: node:14.21.1
   #   user: node
   #   working_dir: '/var/www/html'
   #   extra_hosts:
@@ -68,7 +69,7 @@ services:
 
   mysql:
     container_name: ${APP_NAME}.mysql
-    image: 'mysql/mysql-server:8.0'
+    image: mysql/mysql-server:8.0
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'
     environment:
@@ -79,7 +80,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - 'vol.mysql:/var/lib/mysql'
-      # - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+      # - '$HOME:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
@@ -103,7 +104,7 @@ services:
 
   redis:
     container_name: ${APP_NAME}.redis
-    image: 'redis:alpine'
+    image: redis:alpine
     ports:
       - '${FORWARD_REDIS_PORT:-6379}:6379'
     volumes:
@@ -115,7 +116,7 @@ services:
 
   meilisearch:
     container_name: ${APP_NAME}.meilisearch
-    image: 'getmeili/meilisearch:v0.28.1'
+    image: getmeili/meilisearch:v0.28.1
     ports:
       - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
     volumes:
@@ -134,7 +135,7 @@ services:
 
   mailpit:
     container_name: ${APP_NAME}.mailpit
-    image: 'axllent/mailpit:latest'
+    image: axllent/mailpit:latest
     ports:
       - '${FORWARD_MAILHOG_PORT:-1025}:1025'
       - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
