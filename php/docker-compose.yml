@@ -55,32 +55,13 @@ services:
 
   redis:
     container_name: ${APP_NAME}.redis
-    image: 'redis:alpine'
+    image: redis:alpine
     ports:
       - '${FORWARD_REDIS_PORT:-6379}:6379'
     volumes:
       - 'vol.redis:/data'
     healthcheck:
       test: [ 'CMD', 'redis-cli', 'ping' ]
-      retries: 3
-      timeout: 5s
-
-  meilisearch:
-    container_name: ${APP_NAME}.meilisearch
-    image: 'getmeili/meilisearch:v0.28.1'
-    ports:
-      - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
-    volumes:
-      - 'vol.meilisearch:/meili_data'
-    healthcheck:
-      test:
-        [
-          'CMD',
-          'wget',
-          '--no-verbose',
-          '--spider',
-          'http://localhost:7700/health'
-        ]
       retries: 3
       timeout: 5s
 
@@ -95,7 +76,4 @@ volumes:
     driver: local
   'vol.redis':
     name: '${APP_NAME}.vol.redis'
-    driver: local
-  'vol.meilisearch':
-    name: '${APP_NAME}.vol.meilisearch'
     driver: local
