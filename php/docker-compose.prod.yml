@@ -20,13 +20,3 @@ services:
       - '${FORWARD_PHP_HTTPS_PORT:-443}:443'
     depends_on:
       - php
-
-networks:
-  default:
-    name: '${APP_NAME}.net'
-    driver: bridge
-
-volumes:
-  'vol.pgsql':
-    name: '${APP_NAME}.vol.pgsql'
-    driver: local
