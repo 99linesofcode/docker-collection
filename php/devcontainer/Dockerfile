@@ -9,13 +9,13 @@ LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=abc
 ARG PHP_VERSION="8.1"
-# ARG BUILD_DEPS="autoconf bison gettext libgd-dev libcurl4-openssl-dev libedit-dev libicu-dev libjpeg-dev libmysqlclient-dev libonig-dev libpng-dev libpq-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libzip-dev openssl pkg-config re2c zlib1g-dev"
 
 SHELL ["/bin/bash", "-c"]
 
+USER root
+
 RUN \
-  # TODO swap to asdf install once issues with the plugin have been resolved
-  echo "*** Set up PHP ***" \
+  echo "*** Installing PHP ***" \
   && mkdir -p $HOME/.gnupg \
   && chmod 600 $HOME/.gnupg \
   && echo "disable-ipv6" >> $HOME/.gnupg/dirmngr.conf \
@@ -47,24 +47,7 @@ RUN \
   php$PHP_VERSION-xml \
   php$PHP_VERSION-xdebug \
   php$PHP_VERSION-zip \
-  && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer
-
-# && echo "*** Install PHP through ASDF ***" \
-# && apt-get update && apt-get install -y --no-install-recommends \
-# $BUILD_DEPS \
-# && source /config/.asdf/asdf.sh \
-# && asdf plugin-add php https://github.com/asdf-community/asdf-php.git \
-# && asdf install php PHP_VERSION \
-# && echo "*** Cleaning up build dependencies ***" \
-# && apt-get -y remove $BUILD_DEPS \
-# && apt-get -y autoremove \
-# && apt-get clean \
-# && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+  && echo "*** Installing Composer to $HOME/.local/bin ***" \
+  && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/config/.local/bin --filename=composer
 
 USER $USER
-
-RUN \
-  echo "*** Setting up user environment ***" \
-  && sudo chown -R $USER:$USER /app /config /defaults \
-  # TODO this can probably be handled in .zshrc later on
-  && export PATH="$HOME/.local/bin:$PATH"
