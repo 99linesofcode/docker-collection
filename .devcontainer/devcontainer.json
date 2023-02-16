@@ -1,20 +1,16 @@
 // https://aka.ms/devcontainer.json
 {
   "name": "devcontainer.json",
-  "dockerComposeFile": "../php/docker-compose.yml",
+  "dockerComposeFile": "../bttr/docker-compose.yml",
   "service": "devcontainer",
   "remoteUser": "abc",
   "workspaceFolder": "/config/www",
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.profiles.linux": {
-          "zsh": {
-            "path": "zsh"
-          }
-        },
+        "terminal.integrated.defaultProfile.linux": "zsh",
         "php-cs-fixer.config": "${containerWorkspaceFolder}/api/.php-cs-fixer.dist.php",
-        "php-cs-fixer.executablePath": "php-cs-fixer"
+        "php-cs-fixer.executablePath": "${containerWorkspaceFolder}/api/vendor/bin/php-cs-fixer"
       },
       "extensions": [
         "bmewburn.vscode-intelephense-client",

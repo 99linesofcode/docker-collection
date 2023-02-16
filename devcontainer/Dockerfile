@@ -28,6 +28,8 @@ RUN \
   gnupg \
   ssh \
   curl \
+  zip \
+  unzip \
   git \
   fzf \
   ripgrep \
@@ -50,3 +52,12 @@ RUN \
   && apt-get -y autoremove \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+USER $USER
+
+RUN \
+  echo "*** Setting up development environment ***" \
+  && sudo chown -R $USER:$USER /app /config /defaults \
+  && echo "*** Setting up development environment ***" \
+  && git clone https://github.com/99linesofcode/dotfiles.git $HOME/dotfiles \
+  && $HOME/dotfiles/install.sh

@@ -3,9 +3,7 @@ name: 'docker-base'
 services:
   php:
     container_name: ${APP_NAME}.php
-    build:
-      context: ./php/8.1
-      dockerfile: Dockerfile
+    image: ghcr.io/99linesofcode/php:8.1
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
@@ -19,9 +17,26 @@ services:
       - mysql
       - redis
 
+  node:
+    container_name: ${APP_NAME}.node
+    image: node:18.14.0
+    user: node
+    working_dir: '/var/www/html'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - '${FORWARD_NODE_PORT:-3000}:3000'
+      - '${FORWARD_VITE_PORT:-24678}:24678'
+    environment:
+      - NODE_ENV=${APP_ENV:-development}
+      - NUXT_HOST=node
+      - NUXT_PORT=${FORWARD_NODE_PORT:-3000}
+    depends_on:
+      - php
+
   mysql:
     container_name: ${APP_NAME}.mysql
-    image: 'mysql/mysql-server:8.0'
+    image: mysql/mysql-server:8.0
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'
     environment:
@@ -30,8 +45,9 @@ services:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
-    # volumes:
-    #   - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+    volumes:
+      - 'vol.mysql:/var/lib/mysql'
+      # - '$HOME:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
@@ -39,32 +55,13 @@ services:
 
   redis:
     container_name: ${APP_NAME}.redis
-    image: 'redis:alpine'
+    image: redis:alpine
     ports:
       - '${FORWARD_REDIS_PORT:-6379}:6379'
     volumes:
       - 'vol.redis:/data'
     healthcheck:
       test: [ 'CMD', 'redis-cli', 'ping' ]
-      retries: 3
-      timeout: 5s
-
-  meilisearch:
-    container_name: ${APP_NAME}.meilisearch
-    image: 'getmeili/meilisearch:v0.28.1'
-    ports:
-      - '${FORWARD_MEILISEARCH_PORT:-7700}:7700'
-    volumes:
-      - 'vol.meilisearch:/meili_data'
-    healthcheck:
-      test:
-        [
-          'CMD',
-          'wget',
-          '--no-verbose',
-          '--spider',
-          'http://localhost:7700/health'
-        ]
       retries: 3
       timeout: 5s
 
@@ -79,7 +76,4 @@ volumes:
     driver: local
   'vol.redis':
     name: '${APP_NAME}.vol.redis'
-    driver: local
-  'vol.meilisearch':
-    name: '${APP_NAME}.vol.meilisearch'
     driver: local

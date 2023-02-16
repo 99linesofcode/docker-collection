@@ -12,7 +12,7 @@ ARG PHP_VERSION="81"
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN \
-  echo "*** Install BTTR dependencies ***" && \
+  echo "*** Installing BTTR dependencies ***" && \
   apk add --no-cache --upgrade \
   mariadb-client \
   mariadb-connector-c \
