@@ -40,15 +40,6 @@ RUN \
   && echo "abc ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USER \
   && chmod 0440 /etc/sudoers.d/$USER \
   && mkdir -p /app /config/.local/bin /defaults \
-  && echo "*** Set up Asdf ***" \
-  && git clone https://github.com/asdf-vm/asdf.git /config/.asdf \
-  && source /config/.asdf/asdf.sh \
-  && asdf plugin add neovim https://github.com/richin13/asdf-neovim.git \
-  && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
-  && asdf install neovim $NEOVIM_VERSION \
-  && echo "*** Install nodejs versions ***" \
-  && asdf install nodejs 16.19.0 \
-  && asdf install nodejs 18.14.0 \
   && echo "*** Cleaning up build dependencies ***" \
   && apt-get -y autoremove \
   && apt-get clean \
@@ -61,6 +52,19 @@ SHELL ["zsh", "-c"]
 RUN \
   echo "*** Setting up development environment ***" \
   && sudo chown -R $USER:$USER /app /config /defaults \
-  && echo "*** Setting up development environment ***" \
+  && echo "*** Setting up Asdf ***" \
+  && git clone https://github.com/asdf-vm/asdf.git /config/.asdf \
+  && source /config/.asdf/asdf.sh \
+  && asdf plugin add neovim https://github.com/richin13/asdf-neovim.git \
+  && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
+  && echo "*** Installing neovim ***" \
+  && asdf install neovim $NEOVIM_VERSION \
+  && asdf global neovim $NEOVIM_VERSION \
+  && ln -sf /config/.asdf/shims/nvim /config/.local/bin/vim \
+  && echo "*** Installing nodejs ***" \
+  && asdf install nodejs 16.19.0 \
+  && asdf install nodejs 18.14.0 \
+  && asdf global nodejs 18.14.0 \
+  && echo "*** Installing dotfiles ***" \
   && git clone https://github.com/99linesofcode/dotfiles.git $HOME/dotfiles \
   && $HOME/dotfiles/install.sh
