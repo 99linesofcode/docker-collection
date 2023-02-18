@@ -46,8 +46,10 @@ RUN \
   php$PHP_VERSION-swoole \
   php$PHP_VERSION-xml \
   php$PHP_VERSION-xdebug \
-  php$PHP_VERSION-zip \
-  && echo "*** Installing Composer to $HOME/.local/bin ***" \
-  && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/config/.local/bin --filename=composer
+  php$PHP_VERSION-zip
 
 USER $USER
+
+RUN \
+  echo "*** Installing Composer to $HOME/.local/bin ***" \
+  && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/config/.local/bin --filename=composer
