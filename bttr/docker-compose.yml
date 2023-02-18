@@ -80,7 +80,7 @@ services:
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
       - 'vol.mysql:/var/lib/mysql'
-      # - '$HOME:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
+      # - '$HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql'
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
