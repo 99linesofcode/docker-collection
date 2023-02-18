@@ -10,7 +10,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=abc
 ARG PHP_VERSION="8.0"
 
-SHELL ["/bin/bash", "-c"]
+SHELL ["zsh", "-c"]
 
 USER root
 

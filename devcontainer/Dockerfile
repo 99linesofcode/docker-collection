@@ -14,8 +14,6 @@ ARG NEOVIM_VERSION="nightly"
 
 ENV TZ="Europe/Amsterdam"
 
-SHELL ["/bin/bash", "-c"]
-
 RUN \
   ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ >> /etc/timezone \
   && echo "*** Install base dependencies ***" \
@@ -54,6 +52,8 @@ RUN \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER $USER
+
+SHELL ["zsh", "-c"]
 
 RUN \
   echo "*** Setting up development environment ***" \
