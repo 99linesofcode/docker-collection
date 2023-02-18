@@ -1,0 +1,16 @@
+services:
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ${APP_NAME}.phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - PMA_HOST=${APP_NAME}.mysql
+      - PMA_PMADB=phpmyadmin
+      - UPLOAD_LIMIT=512M
+    restart: unless-stopped
+    ports:
+      - ${PHPMYADMIN_PORT:-8888}:80
+    depends_on:
+      - mysql
