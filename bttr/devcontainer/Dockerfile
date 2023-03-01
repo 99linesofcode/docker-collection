@@ -16,6 +16,7 @@ USER root
 
 RUN \
   echo "*** Installing BTTR dependencies ***" \
+  && apt-get update && apt-get install -y --no-install-recommends \
   libjpeg-turbo8-dev \
   libjpeg-turbo-progs \
   libxslt1-dev \
