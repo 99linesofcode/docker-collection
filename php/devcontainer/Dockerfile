@@ -1,14 +1,14 @@
 # syntax=docker/dockerfile:1
 
-ARG PACKAGE_VERSION="latest"
+ARG PHP_VERSION="8.1"
+ARG BASE_IMAGE="ghcr.io/99linesofcode/devcontainer:${PHP_VERSION}"
 
-FROM ghcr.io/99linesofcode/devcontainer:$PACKAGE_VERSION
+FROM ${BASE_IMAGE}
 
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=abc
-ARG PHP_VERSION="8.1"
 
 SHELL ["zsh", "-c"]
 
