@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
-ARG ALPINE_VERSION="3.17"
-ARG BASE_IMAGE="php:fpm-alpine${ALPINE_VERSION}"
+ARG VERSION="3.17"
+ARG BASE_IMAGE="php:fpm-alpine${VERSION}"
 
 FROM ${BASE_IMAGE}
 

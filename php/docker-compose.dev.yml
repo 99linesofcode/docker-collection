@@ -7,8 +7,6 @@ services:
       # See https://docs.docker.com/compose/compose-file/build/#ssh
       ssh:
         - default
-      args:
-        - PHP_VERSION=8.1
     working_dir: /config/www
     # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
     environment:
