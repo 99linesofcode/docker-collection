@@ -8,8 +8,7 @@ services:
       ssh:
         - default
       args:
-        - PACKAGE_VERSION=8.0
-        - PHP_VERSION=8.0
+        - VERSION=8.0
     working_dir: /config/www
     # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
     environment:
