@@ -1,5 +1,0 @@
-services:
-  ruby:
-    build:
-      context: ./prod
-      dockerfile: Dockerfile

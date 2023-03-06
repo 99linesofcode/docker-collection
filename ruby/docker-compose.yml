@@ -1,44 +1,36 @@
 services:
+  devcontainer:
+    extends:
+      file: ../php/docker-compose.yml
+      service: devcontainer
+    build:
+      context: ./devcontainer
+
   ruby:
     container_name: ${APP_NAME}.ruby
-    build:
-      context: $HOME/Development/99linesofcode/${APP_NAME}
-      dockerfile: $HOME/Development/99linesofcode/docker-base/ruby/ruby/Dockerfile
-    working_dir: '/config/www'
+    image: ghcr.io/rails/cli:latest
     ports:
       - '${FORWARD_PHP_HTTP_PORT:-3000}:3000'
-      - '${FORWARD_PHP_HTTPS_PORT:-3001}:3001'
+    command: "rails server"
+    volumes:
+      - '$HOME/Development/99linesofcode/${APP_NAME}:/rails'
 
   mysql:
-    container_name: ${APP_NAME}.mysql
-    image: mysql/mysql-server:8.0
-    ports:
-      - '${FORWARD_DB_PORT:-3306}:3306'
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USERNAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - 'vol.mysql:/var/lib/mysql'
-      # - '$HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql'
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
-      retries: 3
-      timeout: 5s
+    extends:
+      file: ../php/docker-compose.yml
+      service: mysql
 
   redis:
-    container_name: ${APP_NAME}.redis
-    image: redis:alpine
-    ports:
-      - '${FORWARD_REDIS_PORT:-6379}:6379'
-    volumes:
-      - 'vol.redis:/data'
-    healthcheck:
-      test: [ 'CMD', 'redis-cli', 'ping' ]
-      retries: 3
-      timeout: 5s
+    extends:
+      file: ../php/docker-compose.yml
+      service: redis
+
+  phpmyadmin:
+    extends:
+      file: ../php/docker-compose.yml
+      service: phpmyadmin
+    depends_on:
+      - mysql
 
 networks:
   default:
