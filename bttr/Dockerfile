@@ -29,3 +29,5 @@ RUN \
   php${PHP_VERSION}-sodium \
   php${PHP_VERSION}-xmlreader \
   php${PHP_VERSION}-pecl-imagick
+
+COPY php/root/ /
