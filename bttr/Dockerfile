@@ -12,7 +12,7 @@ LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 ARG PHP_VERSION
 
 RUN \
-  export PACKAGE_VERSION="$(echo ${PHP_VERSION} | sed -E 's/(\.0?)+//g'" \
+  export PHP_VERSION="$(echo ${PHP_VERSION} | sed -E 's/(\.0?)+//g')" \
   && echo "*** Installing BTTR dependencies ***" \
   && apk add --no-cache --upgrade \
   mariadb-client \
