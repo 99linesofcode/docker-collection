@@ -20,7 +20,7 @@ USER root
 
 RUN \
   echo "*** Set timezone ***" \
-  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
+  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
   && echo "*** Installing BTTR dependencies ***" \
   && apt-get update && apt-get install -y --no-install-recommends \
   libjpeg-turbo8-dev \

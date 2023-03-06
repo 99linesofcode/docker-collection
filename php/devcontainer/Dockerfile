@@ -20,7 +20,7 @@ USER root
 
 RUN \
   echo "*** Set timezone ***" \
-  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
+  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
   && echo "*** Installing PHP ***" \
   && mkdir -p $HOME/.gnupg \
   && chmod 600 $HOME/.gnupg \
