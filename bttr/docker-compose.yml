@@ -49,3 +49,14 @@ services:
     extends:
       file: ../php/docker-compose.yml
       service: mailpit
+
+volumes:
+  vol.mysql:
+    name: ${APP_NAME}.vol.mysql
+    driver: local
+  vol.redis:
+    name: ${APP_NAME}.vol.redis
+    driver: local
+  vol.meilisearch:
+    name: ${APP_NAME}.vol.meilisearch
+    driver: local
