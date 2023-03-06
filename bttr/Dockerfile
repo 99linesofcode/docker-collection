@@ -28,6 +28,7 @@ RUN \
   php${PHP_VERSION}-pcntl \
   php${PHP_VERSION}-sodium \
   php${PHP_VERSION}-xmlreader \
+  php${PHP_VERSION}-pecl-xdebug \
   php${PHP_VERSION}-pecl-imagick
 
 COPY php/root/ /
