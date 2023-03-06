@@ -16,7 +16,7 @@ ARG PHP_VERSION
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
 RUN \
-  export PHP_VERSION="$(echo ${PHP_VERSION} | sed 's/\.//')" \
+  export PHP_VERSION="$(echo ${PHP_VERSION} | sed -E 's/(\.0?)+//g'" \
   && echo "*** Installing runtime packages ***" \
   && apk add --no-cache --upgrade \
   php${PHP_VERSION}-ctype \

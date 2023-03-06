@@ -15,8 +15,7 @@ services:
       service: php
     build:
       args:
-        - PACKAGE_VERSION=8.0
-        - PHP_VERSION=8
+        - PHP_VERSION=8.0
     volumes:
       - $HOME/Development/bttr/${APP_NAME}/api:/config/www
     depends_on:

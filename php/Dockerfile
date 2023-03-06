@@ -12,7 +12,7 @@ LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 ARG PHP_VERSION
 
 RUN \
-  export PHP_VERSION="$(echo ${PHP_VERSION} | sed 's/\.//')" \
+  export PHP_VERSION="$(echo ${PHP_VERSION} | sed -E 's/(\.0?)+//g'" \
   && echo "*** Installing runtime packages ***" \
   && apk add --no-cache --upgrade \
   php${PHP_VERSION}-pecl-xdebug
