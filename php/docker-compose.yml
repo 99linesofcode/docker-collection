@@ -6,10 +6,9 @@ services:
       # See https://docs.docker.com/compose/compose-file/build/#ssh
       ssh:
         - default
+      args:
+        - TZ=${TIMEZONE-Europe/Amsterdam}
     working_dir: /config/www
-    # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
-    environment:
-      - TZ=${TIMEZONE:-Europe/Amsterdam}
     tty: true
     volumes:
       - $HOME/.ssh:/config/.ssh

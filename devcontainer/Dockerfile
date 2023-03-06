@@ -8,15 +8,16 @@ FROM ${BASE_IMAGE}
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG USER=abc
-ARG PUID=1000
-ARG PGID=1000
 ARG NEOVIM_VERSION="nightly"
-
-ENV TZ="Europe/Amsterdam"
+ARG PGID=1000
+ARG PUID=1000
+ARG TZ="Europe/Amsterdam"
+ARG USER=abc
 
 RUN \
-  echo "*** Install base dependencies ***" \
+  echo "*** Set timezone ***" \
+  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
+  && echo "*** Install base dependencies ***" \
   && apt-get update && apt-get install -y --no-install-recommends \
   locales \
   gnupg \
@@ -33,8 +34,6 @@ RUN \
   fzf \
   ripgrep \
   zsh \
-  && echo "*** Set locale and timezone ***" \
-  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
   && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
   && echo "*** Creating abc user ***" \
   && useradd -u ${PUID} -U -d /config -s $(which zsh) -G users ${USER} \

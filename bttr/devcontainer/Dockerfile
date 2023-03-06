@@ -9,16 +9,19 @@ FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG USER=abc
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION
+ARG TZ="Europe/Amsterdam"
+ARG USER=abc
 
 SHELL ["zsh", "-c"]
 
 USER root
 
 RUN \
-  echo "*** Installing BTTR dependencies ***" \
+  echo "*** Set timezone ***" \
+  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
+  && echo "*** Installing BTTR dependencies ***" \
   && apt-get update && apt-get install -y --no-install-recommends \
   libjpeg-turbo8-dev \
   libjpeg-turbo-progs \
