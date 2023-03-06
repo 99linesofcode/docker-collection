@@ -1,5 +1,0 @@
-services:
-  php:
-    build:
-      context: ./prod
-      dockerfile: Dockerfile

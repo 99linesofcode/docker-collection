@@ -1,14 +1,17 @@
 # syntax=docker/dockerfile:1
 
-ARG VERSION="8.1"
-ARG BASE_IMAGE="ghcr.io/99linesofcode/devcontainer:${VERSION}"
+ARG PHP_VERSION="8.1"
+ARG PACKAGE_VERSION="php-${PHP_VERSION}"
+ARG BASE_IMAGE="ghcr.io/99linesofcode/devcontainer:${PACKAGE_VERSION}"
 
 FROM ${BASE_IMAGE}
 
-LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
+LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER=abc
+# See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
+ARG PHP_VERSION
 
 SHELL ["zsh", "-c"]
 
@@ -23,30 +26,30 @@ RUN \
   imagemagick \
   optipng \
   gifsicle \
-  php${VERSION}-gd \
-  php${VERSION}-imagick \
-  php${VERSION}-mysql \
-  php${VERSION}-redis \
-  php${VERSION}-xsl
+  php${PHP_VERSION}-gd \
+  php${PHP_VERSION}-imagick \
+  php${PHP_VERSION}-mysql \
+  php${PHP_VERSION}-redis \
+  php${PHP_VERSION}-xsl
 
-# php${VERSION}-bcmath \
-# php${VERSION}-curl \
-# php${VERSION}-dev \
-# php${VERSION}-imap \
-# php${VERSION}-igbinary \
-# php${VERSION}-intl \
-# php${VERSION}-ldap \
-# php${VERSION}-mbstring \
-# php${VERSION}-memcached \
-# php${VERSION}-msgpack \
-# php${VERSION}-pcov \
-# php${VERSION}-pgsql \
-# php${VERSION}-readline \
-# php${VERSION}-soap \
-# php${VERSION}-sqlite3 \
-# php${VERSION}-swoole \
-# php${VERSION}-xml \
-# php${VERSION}-xdebug \
-# php${VERSION}-zip
+# php${PHP_VERSION}-bcmath \
+# php${PHP_VERSION}-curl \
+# php${PHP_VERSION}-dev \
+# php${PHP_VERSION}-imap \
+# php${PHP_VERSION}-igbinary \
+# php${PHP_VERSION}-intl \
+# php${PHP_VERSION}-ldap \
+# php${PHP_VERSION}-mbstring \
+# php${PHP_VERSION}-memcached \
+# php${PHP_VERSION}-msgpack \
+# php${PHP_VERSION}-pcov \
+# php${PHP_VERSION}-pgsql \
+# php${PHP_VERSION}-readline \
+# php${PHP_VERSION}-soap \
+# php${PHP_VERSION}-sqlite3 \
+# php${PHP_VERSION}-swoole \
+# php${PHP_VERSION}-xml \
+# php${PHP_VERSION}-xdebug \
+# php${PHP_VERSION}-zip
 
 USER $USER

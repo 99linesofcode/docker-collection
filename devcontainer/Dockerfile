@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
-ARG UBUNTU_VERSION="22.04"
-ARG BASE_IMAGE="ubuntu:${UBUNTU_VERSION}"
+ARG OS_VERSION="22.04"
+ARG BASE_IMAGE="ubuntu:${OS_VERSION}"
 
 FROM ${BASE_IMAGE}
 
