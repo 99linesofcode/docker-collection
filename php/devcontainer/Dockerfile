@@ -14,9 +14,9 @@ ARG PHP_VERSION
 ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 
-SHELL ["zsh", "-c"]
-
 USER root
+
+SHELL ["/bin/sh", "-c"]
 
 RUN \
   echo "*** Set timezone ***" \
@@ -30,9 +30,15 @@ RUN \
   && gpg --export 0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c >> /usr/share/keyrings/ppa_ondrej_php.gpg \
   && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" >> /etc/apt/sources.list.d/ppa_ondrej_php.list \
   && apt-get update && apt-get install -y --no-install-recommends \
-  php${PHP_VERSION}-cli
+  php${PHP_VERSION}-cli \
+  && echo "*** Cleaning up build dependencies ***" \
+  && apt-get -y autoremove \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER $USER
+
+SHELL ["/bin/zsh", "-c"]
 
 RUN \
   echo "*** Installing Composer to $HOME/.local/bin ***" \

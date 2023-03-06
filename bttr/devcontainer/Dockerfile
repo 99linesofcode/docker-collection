@@ -14,9 +14,9 @@ ARG PHP_VERSION
 ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 
-SHELL ["zsh", "-c"]
-
 USER root
+
+SHELL ["/bin/zsh", "-c"]
 
 RUN \
   echo "*** Set timezone ***" \
