@@ -1,7 +1,25 @@
 services:
+  devcontainer:
+    container_name: ${APP_NAME}.devcontainer
+    build:
+      context: ./devcontainer
+      # See https://docs.docker.com/compose/compose-file/build/#ssh
+      ssh:
+        - default
+      args:
+        - TZ=${TIMEZONE-Europe/Amsterdam}
+    working_dir: /config/www
+    tty: true
+    volumes:
+      - $HOME/.ssh:/config/.ssh
+      - $HOME/.npmrc:/config/.npmrc
+      - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json
+      - $HOME/Development/99linesofcode/${APP_NAME}:/config/www
+
   php:
     container_name: ${APP_NAME}.php
-    image: ghcr.io/99linesofcode/php:8.1
+    build:
+      context: .
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
@@ -10,33 +28,20 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
+      - XDEBUG_MODE=${PHP_XDEBUG_MODE:-off}
+      - XDEBUG_CONFIG=${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}
+    volumes:
+      - $HOME/Development/99linesofcode/${APP_NAME}/api:/config/www
     depends_on:
       - meilisearch
       - mysql
       - redis
 
-  node:
-    container_name: ${APP_NAME}.node
-    image: node:18.14.0
-    user: node
-    working_dir: '/var/www/html'
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    ports:
-      - '${FORWARD_NODE_PORT:-3000}:3000'
-      - '${FORWARD_VITE_PORT:-24678}:24678'
-    environment:
-      - NODE_ENV=${APP_ENV:-development}
-      - NUXT_HOST=node
-      - NUXT_PORT=${FORWARD_NODE_PORT:-3000}
-    depends_on:
-      - php
-
   mysql:
     container_name: ${APP_NAME}.mysql
     image: mysql/mysql-server:8.0
     ports:
-      - '${FORWARD_DB_PORT:-3306}:3306'
+      - ${FORWARD_DB_PORT:-3306}:3306
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_ROOT_HOST=%
@@ -44,8 +49,8 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
-      - 'vol.mysql:/var/lib/mysql'
-      # - '$HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql'
+      - vol.mysql:/var/lib/mysql
+      # - $HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
@@ -55,23 +60,89 @@ services:
     container_name: ${APP_NAME}.redis
     image: redis:alpine
     ports:
-      - '${FORWARD_REDIS_PORT:-6379}:6379'
+      - ${FORWARD_REDIS_PORT:-6379}:6379
     volumes:
-      - 'vol.redis:/data'
+      - vol.redis:/data
     healthcheck:
-      test: [ 'CMD', 'redis-cli', 'ping' ]
+      test: [ CMD, redis-cli, ping ]
       retries: 3
       timeout: 5s
 
+  meilisearch:
+    container_name: ${APP_NAME}.meilisearch
+    image: getmeili/meilisearch:v0.28.1
+    ports:
+      - ${FORWARD_MEILISEARCH_PORT:-7700}:7700
+    volumes:
+      - vol.meilisearch:/meili_data
+    healthcheck:
+      test:
+        [
+          CMD,
+          wget,
+          --no-verbose,
+          --spider,
+          http://localhost:7700/health
+        ]
+      retries: 3
+      timeout: 5s
+
+  # FIXME serve different urls for process.browser and SSR before we can migrate to a containerized node version
+  # node:
+  #   container_name: ${APP_NAME}.node
+  #   image: node:14.21.1
+  #   user: node
+  #   working_dir: /var/www/html
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   ports:
+  #     - ${FORWARD_NODE_PORT:-3000}:3000
+  #     - ${FORWARD_VITE_PORT:-24678}:24678
+  #   environment:
+  #     - NODE_ENV=${APP_ENV:-development}
+  #     - NUXT_HOST=node
+  #     - NUXT_PORT=${FORWARD_NODE_PORT:-3000}
+  #   volumes:
+  #     - /home/jordy/Development/bttr/${APP_NAME}/nuxt:/var/www/html
+  #   command: npm run dev
+  #   depends_on:
+  #     - php
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ${APP_NAME}.phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - PMA_HOST=${APP_NAME}.mysql
+      - PMA_PMADB=phpmyadmin
+      - UPLOAD_LIMIT=512M
+    restart: unless-stopped
+    ports:
+      - ${PHPMYADMIN_PORT:-8888}:80
+    depends_on:
+      - mysql
+
+  mailpit:
+    container_name: ${APP_NAME}.mailpit
+    image: axllent/mailpit:latest
+    ports:
+      - ${FORWARD_MAILHOG_PORT:-1025}:1025
+      - ${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025
+
 networks:
   default:
-    name: '${APP_NAME}.net'
+    name: ${APP_NAME}.net
     driver: bridge
 
 volumes:
-  'vol.mysql':
-    name: '${APP_NAME}.vol.mysql'
+  vol.mysql:
+    name: ${APP_NAME}.vol.mysql
     driver: local
-  'vol.redis':
-    name: '${APP_NAME}.vol.redis'
+  vol.redis:
+    name: ${APP_NAME}.vol.redis
+    driver: local
+  vol.meilisearch:
+    name: ${APP_NAME}.vol.meilisearch
     driver: local

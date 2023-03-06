@@ -8,10 +8,10 @@ server {
     server_name _;
 
     root /config/www/public;
-    index index.html index.htm index.php;
+    index index.php;
 
     location / {
-        try_files $uri $uri/ /index.html /index.php$is_args$args;
+        try_files $uri $uri/ /index.php$is_args$args;
     }
 
     location ~ ^(.+\.php)(.*)$ {
@@ -21,8 +21,8 @@ server {
         include /etc/nginx/fastcgi_params;
     }
 
-    # deny access to .htaccess/.htpasswd files
-    location ~ /\.ht {
+    # deny all attempts to access hidden files such as .htaccess, .htpasswd but leave .well-known working for letsencrypt
+    location ~ /\.(?!well-known).* {
         deny all;
     }
 }
