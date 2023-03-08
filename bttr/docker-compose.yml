@@ -8,7 +8,6 @@ services:
         - default
       args:
         - TZ=${TIMEZONE-Europe/Amsterdam}
-    tty: true
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
