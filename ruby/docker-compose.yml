@@ -3,46 +3,28 @@ services:
     container_name: ${APP_NAME}.devcontainer
     build:
       context: ./devcontainer
-      dockerfile: Dockerfile
       # See https://docs.docker.com/compose/compose-file/build/#ssh
       ssh:
         - default
       args:
-        - PACKAGE_VERSION=latest
-        - RUBY_VERSION=3.2.1
-    working_dir: '/config/www'
-    # See https://docs.docker.com/compose/environment-variables/envvars-precedence/
-    environment:
-      - TZ=${TIMEZONE:-Europe/Amsterdam}
+        - TZ=${TIMEZONE-Europe/Amsterdam}
     tty: true
-    volumes:
-      - '$HOME/.ssh:/config/.ssh'
-      - '$HOME/.npmrc:/config/.npmrc'
-      - '$HOME/.config/composer/auth.json:/config/.config/composer/auth.json'
-      - '$HOME/Development/99linesofcode/${APP_NAME}:/config/www'
-
-  ruby:
-    container_name: ${APP_NAME}.ruby
-    build:
-      context: $HOME/Development/99linesofcode/${APP_NAME}
-      dockerfile: $HOME/Development/99linesofcode/docker-base/ruby/ruby/Dockerfile
-      args:
-        - PACKAGE_VERSION=alpine
-    working_dir: '/config/www'
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
     ports:
       - '${FORWARD_PHP_HTTP_PORT:-3000}:3000'
-      - '${FORWARD_PHP_HTTPS_PORT:-3001}:3001'
-    command: "bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - mysql
+      - redis
     volumes:
-      - '$HOME/Development/99linesofcode/${APP_NAME}:/config/www'
+      - $HOME/.ssh:/config/.ssh
+      - $HOME/.npmrc:/config/.npmrc
+      - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json
+      - $HOME/Development/99linesofcode/${APP_NAME}:/config/www
 
   mysql:
     container_name: ${APP_NAME}.mysql
     image: mysql/mysql-server:8.0
     ports:
-      - '${FORWARD_DB_PORT:-3306}:3306'
+      - ${FORWARD_DB_PORT:-3306}:3306
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_ROOT_HOST=%
@@ -50,8 +32,8 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     volumes:
-      - 'vol.mysql:/var/lib/mysql'
-      # - '$HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql'
+      - vol.mysql:/var/lib/mysql
+      # - $HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
@@ -61,13 +43,36 @@ services:
     container_name: ${APP_NAME}.redis
     image: redis:alpine
     ports:
-      - '${FORWARD_REDIS_PORT:-6379}:6379'
+      - ${FORWARD_REDIS_PORT:-6379}:6379
     volumes:
-      - 'vol.redis:/data'
+      - vol.redis:/data
     healthcheck:
-      test: [ 'CMD', 'redis-cli', 'ping' ]
+      test: [ CMD, redis-cli, ping ]
       retries: 3
       timeout: 5s
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ${APP_NAME}.phpmyadmin
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - PMA_HOST=${APP_NAME}.mysql
+      - PMA_PMADB=phpmyadmin
+      - UPLOAD_LIMIT=512M
+    restart: unless-stopped
+    ports:
+      - ${PHPMYADMIN_PORT:-8888}:80
+    depends_on:
+      - mysql
+
+  mailpit:
+    container_name: ${APP_NAME}.mailpit
+    image: axllent/mailpit:latest
+    ports:
+      - ${FORWARD_MAILHOG_PORT:-1025}:1025
+      - ${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025
 
 networks:
   default:
