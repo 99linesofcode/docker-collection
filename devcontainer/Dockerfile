@@ -15,8 +15,9 @@ ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 
 RUN \
-  echo "*** Set timezone ***" \
+  echo "*** Set locale and timezone ***" \
   && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
+  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
   && echo "*** Install base dependencies ***" \
   && apt-get update && apt-get install -y --no-install-recommends \
   locales \
@@ -34,7 +35,6 @@ RUN \
   fzf \
   ripgrep \
   zsh \
-  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
   && echo "*** Creating abc user ***" \
   && useradd -u ${PUID} -U -d /config -s $(which zsh) -G users ${USER} \
   && echo "abc ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USER} \

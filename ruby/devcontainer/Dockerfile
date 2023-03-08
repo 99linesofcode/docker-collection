@@ -10,7 +10,7 @@ ARG BUILD_DEPS="autoconf bison patch build-essential rustc libssl-dev libyaml-de
 
 ENV RUBY_VERSION="3.2.1"
 
-SHELL ["zsh", "-c"]
+SHELL ["/bin/sh", "-c"]
 
 USER root
 
@@ -25,6 +25,8 @@ RUN \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER $USER
+
+SHELL ["zsh", "-c"]
 
 RUN \
   echo "*** Installing Ruby and Rails ***" \
