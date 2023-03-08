@@ -14,7 +14,7 @@ ARG NODE_VERSION="18.19.0"
 ARG RUBY_VERSION
 ARG USER=abc
 
-WORKDIR /config/www
+WORKDIR /app
 
 USER root
 
