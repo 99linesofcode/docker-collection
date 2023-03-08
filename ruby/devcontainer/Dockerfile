@@ -13,6 +13,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG RUBY_VERSION
 ARG USER=abc
 
+WORKDIR /config/www
+
 USER root
 
 SHELL ["/bin/sh", "-c"]
@@ -46,9 +48,7 @@ RUN \
 
 USER ${USER}
 
-SHELL ["zsh", "-c"]
-
-SHELL ["zsh", "-c"]
+SHELL ["/bin/zsh", "-c"]
 
 RUN \
   echo "*** Installing Ruby and Rails ***" \
