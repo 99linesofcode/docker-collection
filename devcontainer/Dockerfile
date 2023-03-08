@@ -63,10 +63,6 @@ RUN \
   && asdf install neovim $NEOVIM_VERSION \
   && asdf global neovim $NEOVIM_VERSION \
   && ln -sf /config/.asdf/shims/nvim /config/.local/bin/vim \
-  && echo "*** Installing nodejs ***" \
-  && asdf install nodejs 16.19.0 \
-  && asdf install nodejs 18.14.0 \
-  && asdf global nodejs 18.14.0 \
   && echo "*** Installing dotfiles ***" \
   && git clone https://github.com/99linesofcode/dotfiles.git $HOME/dotfiles \
   && $HOME/dotfiles/install.sh

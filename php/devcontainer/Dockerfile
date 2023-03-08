@@ -9,6 +9,7 @@ FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG NODE_VERSION="18.19.0"
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION
 ARG TZ="Europe/Amsterdam"
@@ -67,4 +68,8 @@ SHELL ["/bin/zsh", "-c"]
 
 RUN \
   echo "*** Installing Composer to $HOME/.local/bin ***" \
-  && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/config/.local/bin --filename=composer
+  && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/config/.local/bin --filename=composer \
+  && echo "*** Installing Node.js ***" \
+  && source /config/.asdf/asdf.sh \
+  && asdf install nodejs ${NODE_VERSION} \
+  && asdf global nodejs ${NODE_VERSION}

@@ -9,6 +9,7 @@ FROM ${BASE_IMAGE}
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG NODE_VERSION="18.19.0"
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG RUBY_VERSION
 ARG USER=abc
@@ -53,8 +54,11 @@ USER ${USER}
 SHELL ["/bin/zsh", "-c"]
 
 RUN \
-  echo "*** Installing Ruby and Rails ***" \
+  && echo "*** Installing Node.js ***" \
   && source /config/.asdf/asdf.sh \
+  && asdf install nodejs ${NODE_VERSION} \
+  && asdf global nodejs ${NODE_VERSION} \
+  echo "*** Installing Ruby and Rails ***" \
   && asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git \
   && asdf install ruby ${RUBY_VERSION} \
   && asdf global ruby ${RUBY_VERSION} \
