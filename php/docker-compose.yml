@@ -8,34 +8,24 @@ services:
         - default
       args:
         - TZ=${TIMEZONE-Europe/Amsterdam}
-    working_dir: /config/www
     tty: true
-    volumes:
-      - $HOME/.ssh:/config/.ssh
-      - $HOME/.npmrc:/config/.npmrc
-      - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json
-      - $HOME/Development/99linesofcode/${APP_NAME}:/config/www
-
-  php:
-    container_name: ${APP_NAME}.php
-    build:
-      context: .
     extra_hosts:
       - 'host.docker.internal:host-gateway'
     ports:
       - '${FORWARD_PHP_HTTP_PORT:-80}:80'
       - '${FORWARD_PHP_HTTPS_PORT:-443}:443'
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
       - XDEBUG_MODE=${PHP_XDEBUG_MODE:-off}
       - XDEBUG_CONFIG=${PHP_XDEBUG_CONFIG:-client_host=host.docker.internal}
-    volumes:
-      - $HOME/Development/99linesofcode/${APP_NAME}/api:/config/www
     depends_on:
       - meilisearch
       - mysql
       - redis
+    volumes:
+      - $HOME/.ssh:/config/.ssh
+      - $HOME/.npmrc:/config/.npmrc
+      - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json
+      - $HOME/Development/99linesofcode/${APP_NAME}:/app
 
   mysql:
     container_name: ${APP_NAME}.mysql

@@ -12,6 +12,8 @@ LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION
 
+WORKDIR /app
+
 # See https://github.com/just-containers/s6-overlay#customizing-s6-behaviour
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 

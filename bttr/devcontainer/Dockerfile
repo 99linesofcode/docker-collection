@@ -14,6 +14,8 @@ ARG PHP_VERSION
 ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 
+WORKDIR /app
+
 USER root
 
 SHELL ["/bin/zsh", "-c"]
@@ -29,10 +31,6 @@ RUN \
   imagemagick \
   optipng \
   gifsicle \
-  php${PHP_VERSION}-gd \
-  php${PHP_VERSION}-imagick \
-  php${PHP_VERSION}-mysql \
-  php${PHP_VERSION}-redis \
   php${PHP_VERSION}-xsl
 
 USER $USER

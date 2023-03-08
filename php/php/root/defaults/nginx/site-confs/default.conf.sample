@@ -7,7 +7,7 @@ server {
 
     server_name _;
 
-    root /config/www/public;
+    root /app/public;
     index index.php;
 
     location / {
