@@ -1,10 +1,10 @@
 // https://aka.ms/devcontainer.json
 {
-  "name": "devcontainer.json",
-  "dockerComposeFile": "../bttr/docker-compose.yml",
+  "name": "PHP",
+  "dockerComposeFile": "./docker-compose.yml",
   "service": "devcontainer",
   "remoteUser": "abc",
-  "workspaceFolder": "/config/www",
+  "workspaceFolder": "/app",
   "customizations": {
     "vscode": {
       "settings": {
