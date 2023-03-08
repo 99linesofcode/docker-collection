@@ -31,10 +31,6 @@ RUN \
   imagemagick \
   optipng \
   gifsicle \
-  php${PHP_VERSION}-gd \
-  php${PHP_VERSION}-imagick \
-  php${PHP_VERSION}-mysql \
-  php${PHP_VERSION}-redis \
   php${PHP_VERSION}-xsl
 
 USER $USER
