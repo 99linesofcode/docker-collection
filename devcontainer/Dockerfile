@@ -14,6 +14,8 @@ ARG PUID=1000
 ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 
+WORKDIR /app
+
 RUN \
   echo "*** Set locale and timezone ***" \
   && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
@@ -51,7 +53,7 @@ SHELL ["zsh", "-c"]
 
 RUN \
   echo "*** Setting up development environment ***" \
-  && sudo chown -R ${USER}:${USER} /app /config /defaults \
+  && sudo chown -R ${USER}:${USER} /app /config \
   && echo "*** Setting up Asdf ***" \
   && git clone https://github.com/asdf-vm/asdf.git /config/.asdf \
   && source /config/.asdf/asdf.sh \

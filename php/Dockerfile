@@ -11,6 +11,8 @@ LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
 ARG PHP_VERSION
 
+WORKDIR /app
+
 RUN \
   export PHP_VERSION="$(echo ${PHP_VERSION} | sed -E 's/(\.0?)+//g')" \
   && echo "*** Installing runtime packages ***" \
