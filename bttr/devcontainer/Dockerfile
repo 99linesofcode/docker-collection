@@ -14,6 +14,8 @@ ARG PHP_VERSION
 ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 
+WORKDIR /app
+
 USER root
 
 SHELL ["/bin/zsh", "-c"]
