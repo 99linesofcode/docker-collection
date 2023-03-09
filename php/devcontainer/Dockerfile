@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
 
-ARG PHP_VERSION="8.1"
 ARG PACKAGE_VERSION="base-ubuntu22.04"
 ARG BASE_IMAGE="ghcr.io/99linesofcode/devcontainer:${PACKAGE_VERSION}"
 
@@ -9,9 +8,9 @@ FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NODE_VERSION="18.19.0"
+ARG NODE_VERSION="18.14.0"
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION
+ARG PHP_VERSION="8.1"
 ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 

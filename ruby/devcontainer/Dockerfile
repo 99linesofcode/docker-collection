@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1
 
-ARG RUBY_VERSION="3.2.1"
 ARG PACKAGE_VERSION="base-ubuntu22.04"
 ARG BASE_IMAGE="ghcr.io/99linesofcode/devcontainer:${PACKAGE_VERSION}"
 
@@ -9,9 +8,9 @@ FROM ${BASE_IMAGE}
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NODE_VERSION="18.19.0"
+ARG NODE_VERSION="18.14.0"
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG RUBY_VERSION
+ARG RUBY_VERSION="3.2.1"
 ARG USER=abc
 
 WORKDIR /app
