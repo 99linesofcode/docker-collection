@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG PACKAGE_VERSION="base-ubuntu22.04"
+ARG PACKAGE_VERSION="ubuntu22.04"
 ARG BASE_IMAGE="ghcr.io/99linesofcode/devcontainer:${PACKAGE_VERSION}"
 
 FROM ${BASE_IMAGE}
