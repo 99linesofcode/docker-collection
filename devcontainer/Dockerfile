@@ -16,11 +16,10 @@ ARG USER=abc
 
 WORKDIR /app
 
+SHELL ["/bin/sh", "-c"]
+
 RUN \
-  echo "*** Set locale and timezone ***" \
-  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
-  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
-  && echo "*** Install base dependencies ***" \
+  echo "*** Install core dependencies ***" \
   && apt-get update && apt-get install -y --no-install-recommends \
   locales \
   gnupg \
@@ -37,6 +36,9 @@ RUN \
   fzf \
   ripgrep \
   zsh \
+  && echo "*** Set locale and timezone ***" \
+  && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
+  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
   && echo "*** Creating abc user ***" \
   && useradd -u ${PUID} -U -d /config -s $(which zsh) -G users ${USER} \
   && echo "abc ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USER} \
@@ -49,7 +51,7 @@ RUN \
 
 USER ${USER}
 
-SHELL ["zsh", "-c"]
+SHELL ["/bin/zsh", "-c"]
 
 RUN \
   echo "*** Setting up development environment ***" \
@@ -63,10 +65,6 @@ RUN \
   && asdf install neovim $NEOVIM_VERSION \
   && asdf global neovim $NEOVIM_VERSION \
   && ln -sf /config/.asdf/shims/nvim /config/.local/bin/vim \
-  && echo "*** Installing nodejs ***" \
-  && asdf install nodejs 16.19.0 \
-  && asdf install nodejs 18.14.0 \
-  && asdf global nodejs 18.14.0 \
   && echo "*** Installing dotfiles ***" \
   && git clone https://github.com/99linesofcode/dotfiles.git $HOME/dotfiles \
   && $HOME/dotfiles/install.sh
