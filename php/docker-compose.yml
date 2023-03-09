@@ -10,6 +10,7 @@ services:
         - TZ=${TIMEZONE-Europe/Amsterdam}
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+    tty: true
     ports:
       - '${FORWARD_PHP_HTTP_PORT:-80}:80'
       - '${FORWARD_PHP_HTTPS_PORT:-443}:443'
