@@ -1,0 +1,16 @@
+// https://aka.ms/devcontainer.json
+{
+  "name": "Ruby",
+  "dockerComposeFile": "./docker-compose.yml",
+  "service": "devcontainer",
+  "remoteUser": "abc",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      },
+      "extensions": []
+    }
+  }
+}
