@@ -9,8 +9,9 @@
     "vscode": {
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
-        "php-cs-fixer.config": "${containerWorkspaceFolder}/.php-cs-fixer.dist.php",
-        "php-cs-fixer.executablePath": "${containerWorkspaceFolder}/vendor/bin/php-cs-fixer"
+        "[php]": {
+          "editor.defaultFormatter": "open-southeners.laravel-pint"
+        }
       },
       "extensions": [
         "bmewburn.vscode-intelephense-client",
@@ -20,11 +21,11 @@
         "eamodio.gitlens",
         "graphql.vscode-graphql",
         "gruntfuggly.todo-tree",
-        "junstyle.php-cs-fixer",
         "mikestead.dotenv",
         "ms-azuretools.vscode-docker",
         "naumovs.color-highlight",
         "neilbrayfield.php-docblocker",
+        "open-southeners.laravel-pint",
         "stylelint.vscode-stylelint",
         "vue.volar",
         "xdebug.php-debug"
