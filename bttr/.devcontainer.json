@@ -8,11 +8,58 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.defaultProfile.linux": "zsh",
-        "php-cs-fixer.config": "${containerWorkspaceFolder}/api/.php-cs-fixer.dist.php",
-        "php-cs-fixer.executablePath": "${containerWorkspaceFolder}/api/vendor/bin/php-cs-fixer",
+        "[javascript][typescript][vue]": {
+          "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+        },
         "[php]": {
           "editor.defaultFormatter": "junstyle.php-cs-fixer"
+        },
+        "emmet.includeLanguages": {
+          "blade": "html",
+          "vue": "html",
+          "vue-html": "html"
+        },
+        "eslint.validate": [
+          "javascript",
+          "typescript",
+          "vue"
+        ],
+        "files.associations": {
+          ".php-cs-fixer*": "php"
+        },
+        "laravel-pint.enable": true,
+        "intelephense.format.enable": true,
+        "intelephense.files.exclude": [
+          "**/.git/**",
+          "**/database/migrations/**",
+          "**/node_modules/**",
+          "**/vendor/**/vendor/**",
+          "**/vendor/**/{Tests,tests}/**"
+        ],
+        "intelephense.environment.documentRoot": "${containerWorkspaceFolder}/public",
+        "intelephense.telemetry.enabled": false,
+        "php-cs-fixer.config": "${containerWorkspaceFolder}/api/.php-cs-fixer.dist.php",
+        "php-cs-fixer.executablePath": "${containerWorkspaceFolder}/api/vendor/bin/php-cs-fixer",
+        "php-docblocker.returnGap": true,
+        "php-docblocker.qualifyClassNames": true,
+        "stylelint.validate": [
+          "css",
+          "less",
+          "postcss",
+          "scss",
+          "vue"
+        ],
+        "search.exclude": {
+          "**/.git/**": true,
+          "**/.nuxt/**": true,
+          "**/.output/**": true,
+          "**/composer.lock": true,
+          "**/_ide_helper.php": true,
+          "**/_ide_helper_models.php": true,
+          "**/package.lock": true,
+          "**/storage/**": true,
+          "**/node_modules/**/node_modules/**": true,
+          "**/vendor/**/vendor/**": true
         }
       },
       "extensions": [
