@@ -19,7 +19,6 @@
         "dbaeumer.vscode-eslint",
         "editorconfig.editorconfig",
         "eamodio.gitlens",
-        "graphql.vscode-graphql",
         "gruntfuggly.todo-tree",
         "mikestead.dotenv",
         "ms-azuretools.vscode-docker",
