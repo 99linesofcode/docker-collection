@@ -10,7 +10,10 @@
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh",
         "php-cs-fixer.config": "${containerWorkspaceFolder}/api/.php-cs-fixer.dist.php",
-        "php-cs-fixer.executablePath": "${containerWorkspaceFolder}/api/vendor/bin/php-cs-fixer"
+        "php-cs-fixer.executablePath": "${containerWorkspaceFolder}/api/vendor/bin/php-cs-fixer",
+        "[php]": {
+          "editor.defaultFormatter": "junstyle.php-cs-fixer"
+        }
       },
       "extensions": [
         "bmewburn.vscode-intelephense-client",
