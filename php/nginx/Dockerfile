@@ -2,7 +2,6 @@
 # syntax=docker/dockerfile:1
 
 ARG OS_VERSION="3.17"
-ARG PHP_VERSION="8.1"
 ARG BASE_IMAGE="ghcr.io/linuxserver/baseimage-alpine-nginx:${OS_VERSION}"
 
 FROM ${BASE_IMAGE}
@@ -10,7 +9,7 @@ FROM ${BASE_IMAGE}
 LABEL org.opencontainers.image.authors="99linesofcode@gmail.com"
 
 # See https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION
+ARG PHP_VERSION="8.1"
 
 WORKDIR /app
 
