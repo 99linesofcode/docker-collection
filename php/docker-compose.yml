@@ -57,7 +57,7 @@ services:
 
   meilisearch:
     container_name: ${APP_NAME}.meilisearch
-    image: getmeili/meilisearch:v0.28.1
+    image: getmeili/meilisearch:latest
     ports:
       - ${FORWARD_MEILISEARCH_PORT:-7700}:7700
     volumes:
