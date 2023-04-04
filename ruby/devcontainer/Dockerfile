@@ -41,7 +41,7 @@ RUN \
   libgdbm-dev \
   libdb-dev \
   uuid-dev \
-  #
+  # end asdf dependencies
   libmariadb-dev \
   && echo "*** Cleaning up build dependencies ***" \
   && apt-get -y autoremove \
@@ -53,11 +53,11 @@ USER ${USER}
 SHELL ["/bin/zsh", "-c"]
 
 RUN \
-  && echo "*** Installing Node.js ***" \
+  echo "*** Installing Node.js ***" \
   && source /config/.asdf/asdf.sh \
   && asdf install nodejs ${NODE_VERSION} \
   && asdf global nodejs ${NODE_VERSION} \
-  echo "*** Installing Ruby and Rails ***" \
+  && echo "*** Installing Ruby and Rails ***" \
   && asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git \
   && asdf install ruby ${RUBY_VERSION} \
   && asdf global ruby ${RUBY_VERSION} \
