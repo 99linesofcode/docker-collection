@@ -8,9 +8,45 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "[javascript][typescript]": {
+          "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+        },
+        "[ruby]": {
+          "editor.defaultFormatter": "castwide.solargraph"
+        },
+        "eslint.validate": [
+          "javascript",
+          "typescript"
+        ],
+        "solargraph.autoformat": true,
+        "solargraph.formatting": true,
+        "search.exclude": {
+          "**/.git/**": true,
+          "**/bundle/**": true
+        },
         "terminal.integrated.defaultProfile.linux": "zsh"
       },
-      "extensions": []
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "castwide.solargraph",
+        "CucumberOpen.cucumber-official",
+        "davidpallinder.rails-test-runner",
+        "dbaeumer.vscode-eslint",
+        "dotenv.dotenv-vscode",
+        "eamodio.gitlens",
+        "editorconfig.editorconfig",
+        "groksrc.ruby",
+        "gruntfuggly.todo-tree",
+        "hridoy.rails-snippets",
+        "kaiwood.endwise",
+        "KoichiSasada.vscode-rdbg",
+        "ms-azuretools.vscode-docker",
+        "naumovs.color-highlight",
+        "Shopify.ruby-lsp",
+        "stylelint.vscode-stylelint",
+        "tejanium.stimulusjs",
+        "vortizhe.simple-ruby-erb"
+      ]
     }
   }
 }
