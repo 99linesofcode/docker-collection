@@ -64,16 +64,17 @@
         "bmewburn.vscode-intelephense-client",
         "bradlc.vscode-tailwindcss",
         "dbaeumer.vscode-eslint",
+        "dotenv.dotenv-vscode",
         "editorconfig.editorconfig",
         "eamodio.gitlens",
         "gruntfuggly.todo-tree",
-        "mikestead.dotenv",
+        "m1guelpf.better-pest",
         "ms-azuretools.vscode-docker",
         "naumovs.color-highlight",
         "neilbrayfield.php-docblocker",
         "open-southeners.laravel-pint",
         "stylelint.vscode-stylelint",
-        "vue.volar",
+        "tejanium.stimulusjs",
         "xdebug.php-debug"
       ]
     }
