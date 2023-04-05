@@ -64,7 +64,4 @@ RUN \
   && echo "*** Installing neovim ***" \
   && asdf install neovim $NEOVIM_VERSION \
   && asdf global neovim $NEOVIM_VERSION \
-  && ln -sf /config/.asdf/shims/nvim /config/.local/bin/vim \
-  && echo "*** Installing dotfiles ***" \
-  && git clone https://github.com/99linesofcode/dotfiles.git $HOME/dotfiles \
-  && $HOME/dotfiles/install.sh
+  && ln -sf /config/.asdf/shims/nvim /config/.local/bin/vim
