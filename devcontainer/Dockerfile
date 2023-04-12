@@ -30,6 +30,7 @@ RUN \
   gnupg \
   ssh \
   curl \
+  less \
   zip \
   unzip \
   git \
