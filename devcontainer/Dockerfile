@@ -8,7 +8,6 @@ FROM ${BASE_IMAGE}
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NEOVIM_VERSION="nightly"
 ARG PGID=1000
 ARG PUID=1000
 ARG TZ="Europe/Amsterdam"
@@ -51,18 +50,3 @@ RUN \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER ${USER}
-
-SHELL ["/bin/zsh", "-c"]
-
-RUN \
-  echo "*** Setting up development environment ***" \
-  && sudo chown -R ${USER}:${USER} /app /config \
-  && echo "*** Setting up Asdf ***" \
-  && git clone https://github.com/asdf-vm/asdf.git /config/.asdf \
-  && source /config/.asdf/asdf.sh \
-  && asdf plugin add neovim https://github.com/richin13/asdf-neovim.git \
-  && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
-  && echo "*** Installing neovim ***" \
-  && asdf install neovim $NEOVIM_VERSION \
-  && asdf global neovim $NEOVIM_VERSION \
-  && ln -sf /config/.asdf/shims/nvim /config/.local/bin/vim
