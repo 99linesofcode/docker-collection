@@ -22,7 +22,7 @@ services:
       - $HOME/.ssh:/config/.ssh
       - $HOME/.npmrc:/config/.npmrc
       - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json
-      - $HOME/Development/99linesofcode/${APP_NAME}:/app
+      - $HOME/Development/${USERNAME}/${APP_NAME}:/app
 
   mysql:
     container_name: ${APP_NAME}.mysql
