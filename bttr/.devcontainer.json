@@ -27,7 +27,6 @@
         "files.associations": {
           ".php-cs-fixer*": "php"
         },
-        "laravel-pint.enable": true,
         "intelephense.format.enable": true,
         "intelephense.files.exclude": [
           "**/.git/**",
