@@ -24,8 +24,7 @@ services:
       - $HOME/.ssh:/config/.ssh
       - $HOME/.npmrc:/config/.npmrc
       - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json
-      - $HOME/Development/bttr/${APP_NAME}:/app
-      - $HOME/Development/bttr/sofie:/sofie
+      - $HOME/Development/${USERNAME}/${APP_NAME}:/app
 
   mysql:
     container_name: ${APP_NAME}.mysql
