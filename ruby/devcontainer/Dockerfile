@@ -53,8 +53,9 @@ USER ${USER}
 SHELL ["/bin/zsh", "-c"]
 
 RUN \
-  echo "*** Installing Node.js ***" \
+  && echo "*** Installing Node.js ***" \
   && source /config/.asdf/asdf.sh \
+  && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
   && asdf install nodejs ${NODE_VERSION} \
   && asdf global nodejs ${NODE_VERSION} \
   && echo "*** Installing Ruby and Rails ***" \
