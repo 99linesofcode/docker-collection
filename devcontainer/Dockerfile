@@ -36,10 +36,11 @@ RUN \
   fzf \
   ripgrep \
   zsh \
-  && echo "*** Set locale and timezone ***" \
+  && echo "*** Setting locale and timezone information ***" \
   && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
-  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
-  && echo "*** Creating abc user and directories ***" \
+  && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
+  && echo ${TZ} >> /etc/timezone \
+  && echo "*** Creating user and directories ***" \
   && useradd -u ${PUID} -U -d /config -s $(which zsh) -G users ${USER} \
   && echo "abc ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/${USER} \
   && chmod 0440 /etc/sudoers.d/${USER} \
@@ -51,3 +52,7 @@ RUN \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 USER ${USER}
+
+RUN \
+  echo "*** Setting up Asdf ***" \
+  && git clone https://github.com/asdf-vm/asdf.git /config/.asdf
