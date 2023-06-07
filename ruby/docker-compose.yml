@@ -15,7 +15,7 @@ services:
     volumes:
       - $HOME/.ssh:/config/.ssh
       - $HOME/.npmrc:/config/.npmrc
-      - $HOME/Development/${USERNAME}/${APP_NAME}:/app
+      - $HOME/Development/${USER}/${APP_NAME}:/app
 
   mysql:
     container_name: ${APP_NAME}.mysql
