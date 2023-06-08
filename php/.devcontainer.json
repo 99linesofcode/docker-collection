@@ -33,8 +33,7 @@
           "**/.git/**",
           "**/database/migrations/**",
           "**/node_modules/**",
-          "**/vendor/**/vendor/**",
-          "**/vendor/**/{Tests,tests}/**"
+          "**/vendor/**/vendor/**"
         ],
         "intelephense.environment.documentRoot": "${containerWorkspaceFolder}/public",
         "intelephense.telemetry.enabled": false,
