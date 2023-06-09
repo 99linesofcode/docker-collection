@@ -23,8 +23,7 @@ services:
       - $HOME/.npmrc:/config/.npmrc
       - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json
       - $HOME/Development/${USER}/${APP_NAME}:/app
-      # Uncomment to volume mount xdebug and cachegrind output for profiling analysis on host machine
-      # - $HOME/development/${USER}/profiling/${APP_NAME}:/tmp/xdebug
+      # - $HOME/development/${USER}/profiling/${APP_NAME}:/tmp/xdebug # Uncomment to volume mount xdebug and cachegrind output for profiling analysis on host machine
 
   mysql:
     container_name: ${APP_NAME}.mysql
@@ -112,6 +111,14 @@ services:
       - ${PHPMYADMIN_PORT:-8888}:80
     depends_on:
       - mysql
+
+  # webgrind:
+  #   container_name: ${APP_NAME}.webgrind
+  #   image: jokkedk/webgrind:latest
+  #   ports:
+  #     - ${FORWARD_WEBGRIND_PORT:-8080}:80
+  #   volumes:
+  #     - $HOME/development/${USER}/profiling/${APP_NAME}:/tmp
 
   mailpit:
     container_name: ${APP_NAME}.mailpit
