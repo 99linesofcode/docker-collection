@@ -53,13 +53,15 @@ USER ${USER}
 SHELL ["/bin/zsh", "-c"]
 
 RUN \
-  && echo "*** Installing Node.js ***" \
+  echo "*** Installing Node.js ***" \
   && source /config/.asdf/asdf.sh \
   && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
   && asdf install nodejs ${NODE_VERSION} \
   && asdf global nodejs ${NODE_VERSION} \
-  && echo "*** Installing Ruby and Rails ***" \
+  && echo "*** Configure default gems to be installed ***" \
+  # && echo solargraph >> $HOME/.default-gems \
+  && echo rails >> $HOME/.default-gems \
+  && echo "*** Installing Ruby ***" \
   && asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby.git \
   && asdf install ruby ${RUBY_VERSION} \
-  && asdf global ruby ${RUBY_VERSION} \
-  && gem install rails
+  && asdf global ruby ${RUBY_VERSION}
