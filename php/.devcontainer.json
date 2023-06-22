@@ -60,20 +60,33 @@
         }
       },
       "extensions": [
-        "bmewburn.vscode-intelephense-client",
-        "bradlc.vscode-tailwindcss",
+        // Global dependencies
+        "eamodio.gitlens",
+        "enkia.tokyo-night",
+        "GitHub.copilot",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+        "vscodevim.vim",
+        // Formatters en Linters
+        "bierner.markdown-mermaid",
+        "DavidAnson.vscode-markdownlint",
         "dbaeumer.vscode-eslint",
         "editorconfig.editorconfig",
-        "eamodio.gitlens",
         "gruntfuggly.todo-tree",
-        "m1guelpf.better-pest",
-        "mikestead.dotenv",
-        "ms-azuretools.vscode-docker",
+        "jock.svg",
         "naumovs.color-highlight",
+        "ms-azuretools.vscode-docker",
+        "stylelint.vscode-stylelint",
+        "mikestead.dotenv",
+        "vscode.docker",
+        "vscode.yaml",
+        "yo1dog.cursor-align",
+        "yzhang.markdown-all-in-one",
+        // PHP development
+        "bmewburn.vscode-intelephense-client",
+        "bradlc.vscode-tailwindcss",
+        "m1guelpf.better-pest",
         "neilbrayfield.php-docblocker",
         "open-southeners.laravel-pint",
-        "stylelint.vscode-stylelint",
-        "tejanium.stimulusjs",
         "xdebug.php-debug"
       ]
     }

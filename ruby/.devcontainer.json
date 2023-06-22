@@ -18,6 +18,22 @@
           "javascript",
           "typescript"
         ],
+        "rubyLsp.enabledFeatures": {
+          "codeActions": false,
+          "diagnostics": false,
+          "documentHighlights": true,
+          "documentLink": false,
+          "documentSymbols": false,
+          "foldingRanges": false,
+          "formatting": false,
+          "hover": false,
+          "inlayHint": true,
+          "onTypeFormatting": false,
+          "selectionRanges": false,
+          "semanticHighlighting": true,
+          "completion": false,
+          "codeLens": true
+        },
         "search.exclude": {
           "**/.git/**": true,
           "**/bundle/**": true
@@ -29,21 +45,35 @@
         "terminal.integrated.defaultProfile.linux": "zsh"
       },
       "extensions": [
-        "bradlc.vscode-tailwindcss",
-        "castwide.solargraph",
-        "dbaeumer.vscode-eslint",
+        // Global dependencies
         "eamodio.gitlens",
+        "enkia.tokyo-night",
+        "GitHub.copilot",
+        "ms-vscode-remote.vscode-remote-extensionpack",
+        "vscodevim.vim",
+        // Formatters en Linters
+        "bierner.markdown-mermaid",
+        "DavidAnson.vscode-markdownlint",
+        "dbaeumer.vscode-eslint",
         "editorconfig.editorconfig",
         "gruntfuggly.todo-tree",
+        "jock.svg",
+        "naumovs.color-highlight",
+        "ms-azuretools.vscode-docker",
+        "stylelint.vscode-stylelint",
+        "mikestead.dotenv",
+        "vscode.docker",
+        "vscode.yaml",
+        "yo1dog.cursor-align",
+        "yzhang.markdown-all-in-one",
+        // Ruby development
+        "bradlc.vscode-tailwindcss",
+        "castwide.solargraph",
         "hridoy.rails-snippets",
         "kaiwood.endwise",
         "KoichiSasada.vscode-rdbg",
         "MateuszDrewniak.ruby-test-runner",
-        "mikestead.dotenv",
-        "ms-azuretools.vscode-docker",
-        "naumovs.color-highlight",
         "Shopify.ruby-lsp",
-        "stylelint.vscode-stylelint",
         "tejanium.stimulusjs",
         "vortizhe.simple-ruby-erb"
       ]
