@@ -87,6 +87,7 @@
         "m1guelpf.better-pest",
         "neilbrayfield.php-docblocker",
         "open-southeners.laravel-pint",
+        "SanderRonde.phpstan-vscode",
         "xdebug.php-debug"
       ]
     }
