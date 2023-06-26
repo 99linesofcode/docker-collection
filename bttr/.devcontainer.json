@@ -89,7 +89,7 @@
         "graphql.vscode-graphql",
         "junstyle.php-cs-fixer",
         "neilbrayfield.php-docblocker",
-        "open-southeners.laravel-pint",
+        "SanderRonde.phpstan-vscode",
         "vue.volar",
         "xdebug.php-debug"
       ]
