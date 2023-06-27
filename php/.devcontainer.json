@@ -89,6 +89,7 @@
         "onecentlin.laravel-blade",
         "open-southeners.laravel-pint",
         "SanderRonde.phpstan-vscode",
+        "shufo.vscode-blade-formatter",
         "xdebug.php-debug"
       ]
     }
