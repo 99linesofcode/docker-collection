@@ -14,6 +14,9 @@
         "[php]": {
           "editor.defaultFormatter": "junstyle.php-cs-fixer"
         },
+        "dotfiles.repository": "99linesofcode/dotfiles",
+        "dotfiles.targetPath": "/config/dotfiles",
+        "dotfiles.installCommand": "/config/dotfiles/install.sh",
         "emmet.includeLanguages": {
           "blade": "html",
           "vue": "html",
@@ -47,6 +50,8 @@
           "scss",
           "vue"
         ],
+        // TODO update when proper support for glob patterns is released
+        // See: https://github.com/microsoft/vscode/issues/134415 and related
         "search.exclude": {
           "**/.git/**": true,
           "**/.nuxt/**": true,

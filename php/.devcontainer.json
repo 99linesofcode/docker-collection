@@ -14,6 +14,9 @@
         "[php]": {
           "editor.defaultFormatter": "open-southeners.laravel-pint"
         },
+        "dotfiles.repository": "99linesofcode/dotfiles",
+        "dotfiles.targetPath": "/config/dotfiles",
+        "dotfiles.installCommand": "/config/dotfiles/install.sh",
         "emmet.includeLanguages": {
           "blade": "html",
           "vue": "html",
@@ -46,6 +49,8 @@
           "scss",
           "vue"
         ],
+        // TODO update when proper support for glob patterns is released
+        // See: https://github.com/microsoft/vscode/issues/134415 and related
         "search.exclude": {
           "**/.git/**": true,
           "**/.nuxt/**": true,
@@ -89,6 +94,7 @@
         "onecentlin.laravel-blade",
         "open-southeners.laravel-pint",
         "SanderRonde.phpstan-vscode",
+        "shufo.vscode-blade-formatter",
         "xdebug.php-debug"
       ]
     }
