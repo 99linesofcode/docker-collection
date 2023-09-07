@@ -14,6 +14,11 @@
         "[php]": {
           "editor.defaultFormatter": "open-southeners.laravel-pint"
         },
+        "bladeFormatter.format.noMultipleEmptyLines": true,
+        "bladeFormatter.format.sortHtmlAttributes": "idiomatic",
+        "bladeFormatter.format.sortTailwindcssClasses": true,
+        "bladeFormatter.format.wrapLineLength": 120,
+        "bladeFormatter.format.wrapAttributes": "force-expand-multiline",
         "dotfiles.repository": "99linesofcode/dotfiles",
         "dotfiles.targetPath": "/config/dotfiles",
         "dotfiles.installCommand": "/config/dotfiles/install.sh",
@@ -30,7 +35,6 @@
         "files.associations": {
           ".php-cs-fixer*": "php"
         },
-        "laravel-pint.enable": true,
         "intelephense.format.enable": true,
         "intelephense.files.exclude": [
           "**/.git/**",
@@ -40,8 +44,7 @@
         ],
         "intelephense.environment.documentRoot": "${containerWorkspaceFolder}/public",
         "intelephense.telemetry.enabled": false,
-        "php-docblocker.returnGap": true,
-        "php-docblocker.qualifyClassNames": true,
+        "laravel-pint.enable": true,
         "stylelint.validate": [
           "css",
           "less",
@@ -92,6 +95,7 @@
         "m1guelpf.better-pest",
         "neilbrayfield.php-docblocker",
         "onecentlin.laravel-blade",
+        "onecentlin.laravel5-snippets",
         "open-southeners.laravel-pint",
         "SanderRonde.phpstan-vscode",
         "shufo.vscode-blade-formatter",
