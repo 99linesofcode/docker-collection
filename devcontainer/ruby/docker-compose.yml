@@ -1,0 +1,40 @@
+include: ../base/docker-compose.yml
+
+services:
+  devcontainer:
+    extends:
+      file: ../base/docker-compose.yml
+      service: devcontainer
+    build:
+      context: .
+    depends_on:
+      - mysql
+      - redis
+
+  mysql:
+    extends:
+      file: ../base/docker-compose.yml
+      service: mysql
+
+  phpmyadmin:
+    extends:
+      file: ../base/docker-compose.yml
+      service: phpmyadmin
+
+  redis:
+    extends:
+      file: ../base/docker-compose.yml
+      service: redis
+
+  mailpit:
+    extends:
+      file: ../base/docker-compose.yml
+      service: mailpit
+
+volumes:
+  vol.mysql:
+    name: ${APP_NAME}.vol.mysql
+    driver: local
+  vol.redis:
+    name: ${APP_NAME}.vol.redis
+    driver: local
