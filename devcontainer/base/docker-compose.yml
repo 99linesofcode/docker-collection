@@ -2,20 +2,44 @@ services:
   devcontainer:
     container_name: ${APP_NAME}.devcontainer
     build:
-      context: ./devcontainer
+      context: .
       # See https://docs.docker.com/compose/compose-file/build/#ssh
       ssh:
-        - default
+        - default # lets the builder connect to the default SSH agent
       args:
         - TZ=${TIMEZONE-Europe/Amsterdam}
     tty: true
-    depends_on:
-      - mysql
-      - redis
+    extra_hosts:
+      - 'host.docker.internal:host-gateway' # for accessing the host from inside the container
     volumes:
-      - $HOME/.ssh:/config/.ssh
-      - $HOME/.npmrc:/config/.npmrc
+      - $HOME/.ssh:/config/.ssh:ro # the SSH agent will need access to your configuration
+      - $HOME/.npmrc:/config/.npmrc:ro # necessary when installing packages from a private repository
       - $HOME/Development/${USER}/${APP_NAME}:/app
+
+  # Node.js service
+  #
+  # FIXME serve different urls for process.browser and SSR to avoid CORS issues when SSR
+  # FIXME dont volume mount /node_modules to drastically improve performance
+  #
+  # nodejs:
+  #   container_name: ${APP_NAME}.nodejs
+  #   image: node:alpine
+  #   user: node
+  #   working_dir: /var/www/html
+  #   extra_hosts:
+  #     - host.docker.internal:host-gateway
+  #   ports:
+  #     - ${FORWARD_NODE_PORT:-3000}:3000
+  #     - ${FORWARD_VITE_PORT:-24678}:24678
+  #   environment:
+  #     - NODE_ENV=${APP_ENV:-development}
+  #     - NUXT_HOST=nodejs
+  #     - NUXT_PORT=${FORWARD_NODE_PORT:-3000}
+  #   volumes:
+  #     - $HOME/Development/${APP_NAME}/nuxt:/var/www/html
+  #   command: npm run dev
+  #   depends_on:
+  #     - php
 
   mysql:
     container_name: ${APP_NAME}.mysql
@@ -28,9 +52,6 @@ services:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - vol.mysql:/var/lib/mysql
-      # - $HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
@@ -41,10 +62,8 @@ services:
     image: redis:alpine
     ports:
       - ${FORWARD_REDIS_PORT:-6379}:6379
-    volumes:
-      - vol.redis:/data
     healthcheck:
-      test: [ CMD, redis-cli, ping ]
+      test: [ "CMD", "redis-cli", "ping" ]
       retries: 3
       timeout: 5s
 
@@ -63,6 +82,10 @@ services:
       - ${PHPMYADMIN_PORT:-8888}:80
     depends_on:
       - mysql
+    healthcheck:
+      test: ["CMD", "curl", "-Ss", "http://localhost/robots.txt"]
+      retries: 3
+      timeout: 5s
 
   mailpit:
     container_name: ${APP_NAME}.mailpit
@@ -70,16 +93,13 @@ services:
     ports:
       - ${FORWARD_MAILPIT_PORT:-1025}:1025
       - ${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025
+    healthcheck:
+      test: ["CMD", "curl", "-Ss", "http://localhost:8025/livez"]
+      retries: 3
+      timeout: 5s
 
 networks:
   default:
     name: '${APP_NAME}.net'
     driver: bridge
 
-volumes:
-  'vol.mysql':
-    name: '${APP_NAME}.vol.mysql'
-    driver: local
-  'vol.redis':
-    name: '${APP_NAME}.vol.redis'
-    driver: local

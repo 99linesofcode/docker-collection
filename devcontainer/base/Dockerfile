@@ -18,7 +18,7 @@ WORKDIR /app
 SHELL ["/bin/sh", "-c"]
 
 RUN \
-  echo "*** Install core dependencies ***" \
+  echo "*** Installing core dependencies ***" \
   && apt-get update && apt-get install -y --no-install-recommends \
   locales \
   gnupg \
