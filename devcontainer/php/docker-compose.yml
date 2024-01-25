@@ -11,9 +11,9 @@ services:
       - mysql
       - redis
     volumes:
-      - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json:ro # necessary when installing packages from a private repository
+      - $HOME/.config/composer/auth.json:/config/.config/composer/auth.json # necessary when installing packages from a private repository
       # - $HOME/Development/profiling/${APP_NAME}:/tmp/xdebug # mount xdebug and cachegrind output for profiling analysis on host machine
-  
+
   mysql:
     extends:
       file: ../base/docker-compose.yml
@@ -44,11 +44,11 @@ services:
     healthcheck:
       test:
         [
-          CMD,
-          wget,
-          --no-verbose,
-          --spider,
-          http://localhost:7700/health
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--spider",
+          "http://localhost:7700/health",
         ]
       retries: 3
       timeout: 5s

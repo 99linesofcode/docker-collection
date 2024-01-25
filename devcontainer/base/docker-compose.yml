@@ -10,11 +10,11 @@ services:
         - TZ=${TIMEZONE-Europe/Amsterdam}
     tty: true
     extra_hosts:
-      - 'host.docker.internal:host-gateway' # for accessing the host from inside the container
+      - "host.docker.internal:host-gateway" # for accessing the host from inside the container
     volumes:
       - $HOME/.ssh:/config/.ssh:ro # the SSH agent will need access to your configuration
-      - $HOME/.npmrc:/config/.npmrc:ro # necessary when installing packages from a private repository
-      - $HOME/Development/${USER}/${APP_NAME}:/app
+      - $HOME/.npmrc:/config/.npmrc # necessary when installing packages from a private repository
+      - $HOME/Development/${APP_NAME}:/app
 
   # Node.js service
   #
@@ -53,7 +53,7 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
       retries: 3
       timeout: 5s
 
@@ -63,7 +63,7 @@ services:
     ports:
       - ${FORWARD_REDIS_PORT:-6379}:6379
     healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
+      test: ["CMD", "redis-cli", "ping"]
       retries: 3
       timeout: 5s
 
@@ -100,6 +100,5 @@ services:
 
 networks:
   default:
-    name: '${APP_NAME}.net'
+    name: "${APP_NAME}.net"
     driver: bridge
-
