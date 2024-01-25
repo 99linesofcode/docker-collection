@@ -8,8 +8,8 @@ FROM ${BASE_IMAGE}
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG PGID=1000
 ARG PUID=1000
+ARG PGID=1000
 ARG TZ="Europe/Amsterdam"
 ARG USER=abc
 
