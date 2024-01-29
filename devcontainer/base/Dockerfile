@@ -36,6 +36,7 @@ RUN \
   fzf \
   ripgrep \
   zsh \
+  neofetch \
   && echo "*** Setting locale and timezone information ***" \
   && echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && locale-gen \
   && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime \
