@@ -8,7 +8,7 @@ Development dependencies can be found in the `Dockerfile` for each respective de
 
 ## Contributing to docker-base
 
-Thank you for considering contributing to Docker Base. Please review our [Contribution Guidelines](CONTRIBUTION.md).
+Thank you for considering contributing to Docker Base. Please review our [Contribution Guidelines](CONTRIBUTING.md).
 
 ## Code of Conduct
 
@@ -20,4 +20,4 @@ Please review [our security policy](SECURITY.md) on how to report security vulne
 
 ## License
 
-Docker Base is open-sourced software licensed under the [MIT license](LICENSE.md)
+Docker Base is open-sourced software licensed under the [MIT license](LICENSE)
