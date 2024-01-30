@@ -17,10 +17,6 @@
         "dotfiles.repository": "99linesofcode/dotfiles",
         "dotfiles.targetPath": "/config/dotfiles",
         "dotfiles.installCommand": "/config/dotfiles/install.sh",
-        "eslint.validate": [
-          "javascript",
-          "typescript"
-        ],
         "search.exclude": {
           "**/.git/**": true,
           "**/bundle/**": true
