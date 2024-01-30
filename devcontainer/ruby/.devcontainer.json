@@ -37,7 +37,7 @@
         "enkia.tokyo-night",
         "GitHub.copilot",
         "ms-vscode-remote.vscode-remote-extensionpack",
-        "vscodevim.vim",
+        "asvetliakov.vscode-neovim",
         // Formatters en Linters
         "bierner.markdown-mermaid",
         "DavidAnson.vscode-markdownlint",
