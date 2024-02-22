@@ -28,6 +28,8 @@ services:
     extends:
       file: ../base/docker-compose.yml
       service: phpmyadmin
+    depends_on:
+      - mysql
 
   redis:
     extends:
