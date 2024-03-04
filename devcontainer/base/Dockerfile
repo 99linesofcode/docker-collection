@@ -15,8 +15,6 @@ ARG USER=abc
 
 WORKDIR /app
 
-SHELL ["/bin/sh", "-c"]
-
 RUN \
   echo "*** Installing core dependencies ***" \
   && apt-get update && apt-get install -y --no-install-recommends \
