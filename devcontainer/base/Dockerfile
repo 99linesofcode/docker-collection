@@ -8,6 +8,7 @@ FROM ${BASE_IMAGE}
 LABEL maintainer="Jordy Schreuders <jordy@schreuders.it>"
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG ZOXIDE_VERSION="0.9.4"
 ARG PUID=1000
 ARG PGID=1000
 ARG TZ="Europe/Amsterdam"
@@ -58,4 +59,5 @@ RUN \
   && echo "*** Installing zoxide ***" \
   && ASDF_DIR="${HOME}/.asdf" . /config/.asdf/asdf.sh \
   && asdf plugin add zoxide https://github.com/nyrst/asdf-zoxide.git \
-  && asdf install zoxide latest
+  && asdf install zoxide ${ZOXIDE_VERSION} \
+  && asdf global zoxide ${ZOXIDE_VERSION}
