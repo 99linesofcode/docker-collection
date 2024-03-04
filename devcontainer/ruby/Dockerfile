@@ -18,8 +18,6 @@ WORKDIR /app
 
 USER root
 
-SHELL ["/bin/sh", "-c"]
-
 RUN \
   echo "*** Override timezone information ***" \
   && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
@@ -51,11 +49,9 @@ RUN \
 
 USER ${USER}
 
-SHELL ["/bin/zsh", "-c"]
-
 RUN \
   echo "*** Installing Node.js ***" \
-  && source /config/.asdf/asdf.sh \
+  && . /config/.asdf/asdf.sh \
   && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
   && asdf install nodejs ${NODE_VERSION} \
   && asdf global nodejs ${NODE_VERSION} \
