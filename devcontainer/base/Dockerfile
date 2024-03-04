@@ -56,4 +56,8 @@ USER ${USER}
 
 RUN \
   echo "*** Setting up Asdf ***" \
-  && git clone https://github.com/asdf-vm/asdf.git /config/.asdf
+  && git clone https://github.com/asdf-vm/asdf.git /config/.asdf \
+  && echo "*** Installing zoxide ***" \
+  && . /config/.asdf/asdf.sh \
+  && asdf plugin add zoxide https://github.com/nyrst/asdf-zoxide.git \
+  && asdf install zoxide latest
