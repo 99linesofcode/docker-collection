@@ -51,7 +51,7 @@ USER ${USER}
 
 RUN \
   echo "*** Installing Node.js ***" \
-  && . /config/.asdf/asdf.sh \
+  && ASDF_DIR="${HOME}/.asdf" . /config/.asdf/asdf.sh \
   && asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs.git \
   && asdf install nodejs ${NODE_VERSION} \
   && asdf global nodejs ${NODE_VERSION} \
