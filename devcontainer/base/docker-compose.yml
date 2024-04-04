@@ -9,7 +9,7 @@ services:
       args:
         - PUID=${PUID:-1000}
         - PGID=${PGID:-1000}
-        - TZ=${TIMEZONE-Europe/Amsterdam}
+        - TZ=${TIMEZONE:-Europe/Amsterdam}
     tty: true
     extra_hosts:
       - "host.docker.internal:host-gateway" # for accessing the host from inside the container
