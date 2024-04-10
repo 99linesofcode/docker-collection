@@ -22,12 +22,7 @@ RUN \
   echo "*** Override timezone information ***" \
   && ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} >> /etc/timezone \
   && echo "*** Installing PHP ***" \
-  && mkdir -p ${HOME}/.gnupg \
-  && chmod 600 ${HOME}/.gnupg \
-  && echo "disable-ipv6" >> ${HOME}/.gnupg/dirmngr.conf \
-  && echo "keyserver hkp://keyserver.ubuntu.com:80" >> ${HOME}/.gnupg/dirmngr.conf \
-  && gpg --recv-key 0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c \
-  && gpg --export 0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c >> /usr/share/keyrings/ppa_ondrej_php.gpg \
+  && curl -sS 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x14aa40ec0831756756d7f66c4f4ea0aae5267a6c' | gpg --dearmor | tee /usr/share/keyrings/ppa_ondrej_php.gpg > /dev/null \
   && echo "deb [signed-by=/usr/share/keyrings/ppa_ondrej_php.gpg] https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy main" >> /etc/apt/sources.list.d/ppa_ondrej_php.list \
   && apt-get update && apt-get install -y --no-install-recommends \
   php${PHP_VERSION}-bcmath \
