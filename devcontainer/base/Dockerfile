@@ -25,7 +25,6 @@ RUN \
   ca-certificates \
   sudo \
   build-essential \
-  gnupg \
   ssh \
   curl \
   less \
