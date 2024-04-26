@@ -1,6 +1,6 @@
 services:
   devcontainer:
-    container_name: ${APP_NAME}.devcontainer
+    container_name: ${APP_NAME}-devcontainer
     build:
       context: .
       # See https://docs.docker.com/compose/compose-file/build/#ssh
@@ -24,7 +24,7 @@ services:
   # FIXME dont volume mount /node_modules to drastically improve performance
   #
   # nodejs:
-  #   container_name: ${APP_NAME}.nodejs
+  #   container_name: ${APP_NAME}-nodejs
   #   image: node:alpine
   #   user: node
   #   working_dir: /var/www/html
@@ -44,7 +44,7 @@ services:
   #     - php
 
   mysql:
-    container_name: ${APP_NAME}.mysql
+    container_name: ${APP_NAME}-mysql
     image: mysql/mysql-server:8.0
     ports:
       - ${FORWARD_DB_PORT:-3306}:3306
@@ -60,7 +60,7 @@ services:
       timeout: 5s
 
   redis:
-    container_name: ${APP_NAME}.redis
+    container_name: ${APP_NAME}-redis
     image: redis:alpine
     ports:
       - ${FORWARD_REDIS_PORT:-6379}:6379
@@ -71,12 +71,12 @@ services:
 
   phpmyadmin:
     image: phpmyadmin:latest
-    container_name: ${APP_NAME}.phpmyadmin
+    container_name: ${APP_NAME}-phpmyadmin
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
-      - PMA_HOST=${APP_NAME}.mysql
+      - PMA_HOST=${APP_NAME}-mysql
       - PMA_PMADB=phpmyadmin
       - UPLOAD_LIMIT=512M
     restart: unless-stopped
@@ -88,7 +88,7 @@ services:
       timeout: 5s
 
   mailpit:
-    container_name: ${APP_NAME}.mailpit
+    container_name: ${APP_NAME}-mailpit
     image: axllent/mailpit:latest
     ports:
       - ${FORWARD_MAILPIT_PORT:-1025}:1025
@@ -100,5 +100,5 @@ services:
 
 networks:
   default:
-    name: "${APP_NAME}.net"
+    name: "${APP_NAME}-net"
     driver: bridge

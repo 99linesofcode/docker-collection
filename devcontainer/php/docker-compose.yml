@@ -21,7 +21,7 @@ services:
       file: ../base/docker-compose.yml
       service: mysql
     volumes:
-      - vol.mysql:/var/lib/mysql
+      - mysql:/var/lib/mysql
       # - $HOME/dbdump.sql:/docker-entrypoint-initdb.d/dbdump.sql # dbdump.sql is read on init and can be used to prepopulate the db
 
   phpmyadmin:
@@ -36,10 +36,10 @@ services:
       file: ../base/docker-compose.yml
       service: redis
     volumes:
-      - vol.redis:/data
+      - redis:/data
 
   soketi:
-    container_name: ${APP_NAME}.soketi
+    container_name: ${APP_NAME}-soketi
     image: quay.io/soketi/soketi:latest
     environment:
       - SOKETI_DEBUG=${SOKETI_DEBUG:-1}
@@ -52,12 +52,12 @@ services:
       - ${PUSHER_METRICS_PORT:-9601}:9601
 
   meilisearch:
-    container_name: ${APP_NAME}.meilisearch
+    container_name: ${APP_NAME}-meilisearch
     image: getmeili/meilisearch:latest
     ports:
       - ${FORWARD_MEILISEARCH_PORT:-7700}:7700
     volumes:
-      - vol.meilisearch:/meili_data
+      - meilisearch:/meili_data
     healthcheck:
       test:
         [
@@ -76,7 +76,7 @@ services:
       service: mailpit
 
   # webgrind:
-  #   container_name: ${APP_NAME}.webgrind
+  #   container_name: ${APP_NAME}-webgrind
   #   image: jokkedk/webgrind:latest
   #   ports:
   #     - ${FORWARD_WEBGRIND_PORT:-8080}:80
@@ -84,12 +84,12 @@ services:
   #     - $HOME/Development/profiling/${APP_NAME}:/tmp
 
 volumes:
-  vol.mysql:
-    name: ${APP_NAME}.vol.mysql
+  mysql:
+    name: ${APP_NAME}-vol-mysql
     driver: local
-  vol.redis:
-    name: ${APP_NAME}.vol.redis
+  redis:
+    name: ${APP_NAME}-vol-redis
     driver: local
-  vol.meilisearch:
-    name: ${APP_NAME}.vol.meilisearch
+  meilisearch:
+    name: ${APP_NAME}-vol-meilisearch
     driver: local
