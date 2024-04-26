@@ -1,5 +1,3 @@
-include: ../base/docker-compose.yml
-
 services:
   devcontainer:
     extends:
@@ -34,9 +32,9 @@ services:
       service: mailpit
 
 volumes:
-  vol.mysql:
-    name: ${APP_NAME}.vol.mysql
+  mysql:
+    name: ${APP_NAME}-vol-mysql
     driver: local
-  vol.redis:
-    name: ${APP_NAME}.vol.redis
+  redis:
+    name: ${APP_NAME}-vol-redis
     driver: local
