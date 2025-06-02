@@ -1,27 +1,25 @@
 services:
-  devcontainer:
-    container_name: ${APP_NAME}-devcontainer
-    build:
-      context: .
-      # See https://docs.docker.com/compose/compose-file/build/#ssh
-      ssh:
-        - default # lets the builder connect to the default SSH agent
-      args:
-        - PUID=${PUID:-1000}
-        - PGID=${PGID:-1000}
-        - TZ=${TIMEZONE:-Europe/Amsterdam}
-    tty: true
-    extra_hosts:
-      - "host.docker.internal:host-gateway" # for accessing the host from inside the container
-    volumes:
-      - $HOME/.ssh:/config/.ssh:ro # the SSH agent will need access to your configuration
-      - $HOME/.npmrc:/config/.npmrc # necessary when installing packages from a private repository
-      - $HOME/Development/${APP_NAME}:/app
+  # devcontainer:
+  #   container_name: ${APP_NAME}-devcontainer
+  #   build:
+  #     context: .
+  #     # See https://docs.docker.com/compose/compose-file/build/#ssh
+  #     ssh:
+  #       - default # lets the builder connect to the default SSH agent
+  #     args:
+  #       - PUID=${PUID:-1000}
+  #       - PGID=${PGID:-1000}
+  #       - TZ=${TIMEZONE:-Europe/Amsterdam}
+  #   tty: true
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway" # for accessing the host from inside the container
+  #   volumes:
+  #     - $HOME/.ssh:/config/.ssh:ro # the SSH agent will need access to your configuration
+  #     - $HOME/.npmrc:/config/.npmrc # necessary when installing packages from a private repository
+  #     - ../:/app
 
-  # Node.js service
-  #
-  # FIXME serve different urls for process.browser and SSR to avoid CORS issues when SSR
-  # FIXME dont volume mount /node_modules to drastically improve performance
+  # FIXME: serve different urls for process.browser and SSR to avoid CORS issues when SSR
+  # FIXME: dont volume mount /node_modules to drastically improve performance
   #
   # nodejs:
   #   container_name: ${APP_NAME}-nodejs
