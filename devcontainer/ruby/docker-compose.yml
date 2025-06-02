@@ -8,9 +8,14 @@ services:
   #   depends_on:
   #     - mysql
   #     - redis
+
+  ruby:
+    image: ruby:latest
     depends_on:
       - mysql
       - redis
+    volumes:
+      - ../:/app
 
   mysql:
     extends:

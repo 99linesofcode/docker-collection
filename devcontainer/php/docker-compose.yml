@@ -27,7 +27,7 @@ services:
       - mysql
       - redis
     volumes:
-      - $HOME/Development/${APP_NAME}:/app
+      - ../:/app
       # - $HOME/Development/profiling/${APP_NAME}:/tmp/xdebug # mount xdebug and cachegrind output for profiling analysis on host machine
 
   mysql:

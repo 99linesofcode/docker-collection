@@ -36,7 +36,7 @@ services:
   #     - NUXT_HOST=nodejs
   #     - NUXT_PORT=${FORWARD_NODE_PORT:-3000}
   #   volumes:
-  #     - $HOME/Development/${APP_NAME}/nuxt:/var/www/html
+  #     - ../nuxt:/var/www/html
   #   command: npm run dev
   #   depends_on: # NOTE: cannot be used when extending, extract to child
   #     - php
