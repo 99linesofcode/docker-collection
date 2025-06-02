@@ -38,11 +38,3 @@ services:
     extends:
       file: ../base/docker-compose.yml
       service: mailpit
-
-volumes:
-  mysql:
-    name: ${APP_NAME}-vol-mysql
-    driver: local
-  redis:
-    name: ${APP_NAME}-vol-redis
-    driver: local
