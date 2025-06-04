@@ -1,0 +1,6 @@
+[submodule "ruby"]
+	path = ruby
+	url = git@github.com:99linesofcode/docker-ruby.git
+[submodule "php"]
+	path = php
+	url = git@github.com:99linesofcode/docker-php.git
