@@ -1,3 +1,12 @@
+## [2.2.1](https://github.com/99linesofcode/docker-collection/compare/v2.2.0...v2.2.1) (2025-10-15)
+
+
+### Bug Fixes
+
+* **changelog:** generating failed due to missing write permissions ([cdf317a](https://github.com/99linesofcode/docker-collection/commit/cdf317a9732ddcd9f2b11c09a0199f4ba71bdaf9))
+
+
+
 # [2.2.0](https://github.com/99linesofcode/docker-collection/compare/v2.1.0...v2.2.0) (2025-06-23)
 
 
@@ -28,15 +37,6 @@
 ### Bug Fixes
 
 * **markdown:** linter was not being used as formatter ([24c0a98](https://github.com/99linesofcode/docker-collection/commit/24c0a984f7192de23ce2e53f9c160218fd7aca0b))
-
-
-
-## [1.4.3](https://github.com/99linesofcode/docker-collection/compare/v1.4.2...v1.4.3) (2024-04-04)
-
-
-### Bug Fixes
-
-* **base:** syntax error in parameter expansion of timezone argument ([532872a](https://github.com/99linesofcode/docker-collection/commit/532872a98fdd901aad36e06a9a582dae4763231b))
 
 
 
