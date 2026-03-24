@@ -1,3 +1,12 @@
+# [2.3.0](https://github.com/99linesofcode/docker-collection/compare/v2.2.1...v2.3.0) (2026-03-24)
+
+
+### Features
+
+* **dependabot:** automatically update submodules, docker and docker compose image versions ([e26c698](https://github.com/99linesofcode/docker-collection/commit/e26c698df873bb43a01f5c87c70a57b80d6177a0))
+
+
+
 ## [2.2.1](https://github.com/99linesofcode/docker-collection/compare/v2.2.0...v2.2.1) (2025-10-15)
 
 
@@ -28,15 +37,6 @@
 ### Features
 
 * trigger changelog workflow on push to main ([09f4694](https://github.com/99linesofcode/docker-collection/commit/09f46942dc33adc257972c3fcf33da219276042e))
-
-
-
-## [1.4.4](https://github.com/99linesofcode/docker-collection/compare/v1.4.3...v1.4.4) (2024-04-10)
-
-
-### Bug Fixes
-
-* **markdown:** linter was not being used as formatter ([24c0a98](https://github.com/99linesofcode/docker-collection/commit/24c0a984f7192de23ce2e53f9c160218fd7aca0b))
 
 
 
