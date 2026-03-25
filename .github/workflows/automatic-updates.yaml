@@ -1,7 +1,0 @@
-name: automatic updates
-
-on: pull_request
-
-jobs:
-  automatic-updates:
-    uses: 99linesofcode/.github/.github/workflows/automatic-updates.yaml@main

@@ -1,4 +1,4 @@
-name: changelog
+name: Generate Changelog and Release
 
 on:
   push:
