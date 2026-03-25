@@ -1,3 +1,12 @@
+## [2.3.2](https://github.com/99linesofcode/docker-collection/compare/v2.3.1...v2.3.2) (2026-03-25)
+
+
+### Bug Fixes
+
+* **deps:** bump ruby from `03a300d` to `677e617` ([132c68d](https://github.com/99linesofcode/docker-collection/commit/132c68db7a1a64417ac62f69ab0b04fb4f7e5650))
+
+
+
 ## [2.3.1](https://github.com/99linesofcode/docker-collection/compare/v2.3.0...v2.3.1) (2026-03-25)
 
 
@@ -37,15 +46,6 @@
 
 * **devcontainer/frankenphp:** use frankenphp for local development ([379c4fe](https://github.com/99linesofcode/docker-collection/commit/379c4fe4baa549607fa39e09c3735fadd63cea39))
 * **frankenphp:** production container with Cloudflare DNS challenge ([76aea5a](https://github.com/99linesofcode/docker-collection/commit/76aea5a313b98ff534c4791ab143c15106d3d7bf))
-
-
-
-# [2.1.0](https://github.com/99linesofcode/docker-collection/compare/v2.0.0...v2.1.0) (2024-05-01)
-
-
-### Features
-
-* trigger changelog workflow on push to main ([09f4694](https://github.com/99linesofcode/docker-collection/commit/09f46942dc33adc257972c3fcf33da219276042e))
 
 
 
