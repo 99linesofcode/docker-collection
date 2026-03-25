@@ -1,3 +1,12 @@
+## [2.3.1](https://github.com/99linesofcode/docker-collection/compare/v2.3.0...v2.3.1) (2026-03-25)
+
+
+### Bug Fixes
+
+* **dependabot:** time should be of type string instead of int ([6fbd5de](https://github.com/99linesofcode/docker-collection/commit/6fbd5de44c4783add7ddfd8f7f5ba841e243bf17))
+
+
+
 # [2.3.0](https://github.com/99linesofcode/docker-collection/compare/v2.2.1...v2.3.0) (2026-03-24)
 
 
