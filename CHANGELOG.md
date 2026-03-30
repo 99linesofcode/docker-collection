@@ -1,3 +1,13 @@
+## [2.3.4](https://github.com/99linesofcode/docker-collection/compare/v2.3.3...v2.3.4) (2026-03-30)
+
+
+### Bug Fixes
+
+* **deps:** bump php from `d8bb090` to `e2b30ff` ([03b3cad](https://github.com/99linesofcode/docker-collection/commit/03b3cad21251508c4b87f48fa1d92dd12d9e0545))
+* **deps:** bump ruby from `677e617` to `727cace` ([51f914f](https://github.com/99linesofcode/docker-collection/commit/51f914fae23dd77a017ec9158bc4ef3588cd67d7))
+
+
+
 ## [2.3.3](https://github.com/99linesofcode/docker-collection/compare/v2.3.2...v2.3.3) (2026-03-25)
 
 
@@ -31,15 +41,6 @@
 ### Features
 
 * **dependabot:** automatically update submodules, docker and docker compose image versions ([e26c698](https://github.com/99linesofcode/docker-collection/commit/e26c698df873bb43a01f5c87c70a57b80d6177a0))
-
-
-
-## [2.2.1](https://github.com/99linesofcode/docker-collection/compare/v2.2.0...v2.2.1) (2025-10-15)
-
-
-### Bug Fixes
-
-* **changelog:** generating failed due to missing write permissions ([cdf317a](https://github.com/99linesofcode/docker-collection/commit/cdf317a9732ddcd9f2b11c09a0199f4ba71bdaf9))
 
 
 
