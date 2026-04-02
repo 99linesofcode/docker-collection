@@ -1,5 +1,4 @@
 version: 2
-
 updates:
   - package-ecosystem: gitsubmodule
     directory: /
@@ -24,6 +23,8 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
+    cooldown:
+      default-days: 7
 
   - package-ecosystem: docker-compose
     directory: /
@@ -36,3 +37,5 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
+    cooldown:
+      default-days: 7
