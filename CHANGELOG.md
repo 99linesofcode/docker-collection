@@ -1,3 +1,12 @@
+## [2.3.5](https://github.com/99linesofcode/docker-collection/compare/v2.3.4...v2.3.5) (2026-04-02)
+
+
+### Bug Fixes
+
+* **dependabot:** introduce dependency cooldown to mitigate supply chain attacks ([780c4e8](https://github.com/99linesofcode/docker-collection/commit/780c4e81f04b3a9a324a05bcb1dc3435b0a15c13))
+
+
+
 ## [2.3.4](https://github.com/99linesofcode/docker-collection/compare/v2.3.3...v2.3.4) (2026-03-30)
 
 
@@ -32,15 +41,6 @@
 ### Bug Fixes
 
 * **dependabot:** time should be of type string instead of int ([6fbd5de](https://github.com/99linesofcode/docker-collection/commit/6fbd5de44c4783add7ddfd8f7f5ba841e243bf17))
-
-
-
-# [2.3.0](https://github.com/99linesofcode/docker-collection/compare/v2.2.1...v2.3.0) (2026-03-24)
-
-
-### Features
-
-* **dependabot:** automatically update submodules, docker and docker compose image versions ([e26c698](https://github.com/99linesofcode/docker-collection/commit/e26c698df873bb43a01f5c87c70a57b80d6177a0))
 
 
 
