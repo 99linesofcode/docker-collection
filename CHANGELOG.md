@@ -1,3 +1,14 @@
+## [2.3.7](https://github.com/99linesofcode/docker-collection/compare/v2.3.6...v2.3.7) (2026-09-16)
+
+
+### Bug Fixes
+
+* **deps:** bump php from `230b21a` to `3947a9d` ([#89](https://github.com/99linesofcode/docker-collection/issues/89)) ([2bbee25](https://github.com/99linesofcode/docker-collection/commit/2bbee2549e0de386bee939ef59a8780fe409a5da))
+* **deps:** bump php from `3947a9d` to `1458b96` ([#91](https://github.com/99linesofcode/docker-collection/issues/91)) ([539d4c0](https://github.com/99linesofcode/docker-collection/commit/539d4c0c2a5776d78b1f8d59e21e85840a9ab03f))
+* **deps:** bump ruby from `b276a71` to `04679d9` ([#90](https://github.com/99linesofcode/docker-collection/issues/90)) ([263d158](https://github.com/99linesofcode/docker-collection/commit/263d1589a396f1192e43cdf80a6abb85e3d52175))
+
+
+
 ## [2.3.6](https://github.com/99linesofcode/docker-collection/compare/v2.3.5...v2.3.6) (2026-07-08)
 
 
@@ -40,15 +51,6 @@
 ### Bug Fixes
 
 * **deps:** bump php from `e865096` to `d8bb090` ([e973054](https://github.com/99linesofcode/docker-collection/commit/e97305455521ce3bc6dad013e42a786a6d293ebf))
-
-
-
-## [2.3.2](https://github.com/99linesofcode/docker-collection/compare/v2.3.1...v2.3.2) (2026-03-25)
-
-
-### Bug Fixes
-
-* **deps:** bump ruby from `03a300d` to `677e617` ([132c68d](https://github.com/99linesofcode/docker-collection/commit/132c68db7a1a64417ac62f69ab0b04fb4f7e5650))
 
 
 
