@@ -11,6 +11,9 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
+    ignore:
+      - update-types:
+          - version-update:semver-patch
 
   - package-ecosystem: docker
     directory: /
@@ -23,6 +26,9 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
+    ignore:
+      - update-types:
+          - version-update:semver-patch
     cooldown:
       default-days: 7
 
@@ -37,5 +43,8 @@ updates:
       prefix: fix
       prefix-development: chore
       include: scope
+    ignore:
+      - update-types:
+          - version-update:semver-patch
     cooldown:
       default-days: 7
