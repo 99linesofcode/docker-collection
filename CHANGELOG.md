@@ -1,3 +1,16 @@
+## [2.3.8](https://github.com/99linesofcode/docker-collection/compare/v2.3.7...v2.3.8) (2026-09-21)
+
+
+### Bug Fixes
+
+* **deps:** bump php from `1458b96` to `1898edf` ([#92](https://github.com/99linesofcode/docker-collection/issues/92)) ([3104d38](https://github.com/99linesofcode/docker-collection/commit/3104d3841580f429eb102b674136b5b7aae8c69a))
+* **deps:** bump php from `1898edf` to `3e2a4be` ([#94](https://github.com/99linesofcode/docker-collection/issues/94)) ([ef31d57](https://github.com/99linesofcode/docker-collection/commit/ef31d575026c772b20b3e3325c271282f6be159f))
+* **deps:** bump php from `3e2a4be` to `db969cd` ([#97](https://github.com/99linesofcode/docker-collection/issues/97)) ([d9ca5ea](https://github.com/99linesofcode/docker-collection/commit/d9ca5ea0289606cb9a66b347796d242ebc828be4))
+* **deps:** bump ruby from `04679d9` to `50380a0` ([#93](https://github.com/99linesofcode/docker-collection/issues/93)) ([a3f6b80](https://github.com/99linesofcode/docker-collection/commit/a3f6b80a3c685396cd438acb233b1cd85a2d41c0))
+* **deps:** bump ruby from `50380a0` to `12497c9` ([#96](https://github.com/99linesofcode/docker-collection/issues/96)) ([b33424d](https://github.com/99linesofcode/docker-collection/commit/b33424d4839a0761df88667da5c8906732b1b3cf))
+
+
+
 ## [2.3.7](https://github.com/99linesofcode/docker-collection/compare/v2.3.6...v2.3.7) (2026-09-16)
 
 
@@ -42,15 +55,6 @@
 
 * **deps:** bump php from `d8bb090` to `e2b30ff` ([03b3cad](https://github.com/99linesofcode/docker-collection/commit/03b3cad21251508c4b87f48fa1d92dd12d9e0545))
 * **deps:** bump ruby from `677e617` to `727cace` ([51f914f](https://github.com/99linesofcode/docker-collection/commit/51f914fae23dd77a017ec9158bc4ef3588cd67d7))
-
-
-
-## [2.3.3](https://github.com/99linesofcode/docker-collection/compare/v2.3.2...v2.3.3) (2026-03-25)
-
-
-### Bug Fixes
-
-* **deps:** bump php from `e865096` to `d8bb090` ([e973054](https://github.com/99linesofcode/docker-collection/commit/e97305455521ce3bc6dad013e42a786a6d293ebf))
 
 
 
