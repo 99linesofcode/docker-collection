@@ -1,3 +1,18 @@
+## [2.3.10](https://github.com/99linesofcode/docker-collection/compare/v2.3.9...v2.3.10) (2026-10-10)
+
+
+### Bug Fixes
+
+* **deps:** bump php from `07f6214` to `23dd104` ([#107](https://github.com/99linesofcode/docker-collection/issues/107)) ([2006e56](https://github.com/99linesofcode/docker-collection/commit/2006e56ffbdfabaf62bd1dfd57c971b4be0fd63a))
+* **deps:** bump php from `23dd104` to `e3af6dd` ([#109](https://github.com/99linesofcode/docker-collection/issues/109)) ([221cb54](https://github.com/99linesofcode/docker-collection/commit/221cb54735e2d6319d734560cd6f4f06b0b1f128))
+* **deps:** bump php from `5c23baa` to `07f6214` ([#104](https://github.com/99linesofcode/docker-collection/issues/104)) ([814a309](https://github.com/99linesofcode/docker-collection/commit/814a309e2749b758b337f7d440bd2713ad7c17c5))
+* **deps:** bump php from `db969cd` to `5c23baa` ([#100](https://github.com/99linesofcode/docker-collection/issues/100)) ([eb773c0](https://github.com/99linesofcode/docker-collection/commit/eb773c0eb3e3cb2c41e8fa58c2fa2557b450fdff))
+* **deps:** bump ruby from `1bf0c93` to `84a821d` ([#105](https://github.com/99linesofcode/docker-collection/issues/105)) ([902c1ef](https://github.com/99linesofcode/docker-collection/commit/902c1ef0bcbf65507f7aabed7808f0ec1ffbfb69))
+* **deps:** bump ruby from `357c0dc` to `1bf0c93` ([#103](https://github.com/99linesofcode/docker-collection/issues/103)) ([9e80fb8](https://github.com/99linesofcode/docker-collection/commit/9e80fb879fbcd95c5b36197b944a47c65af23888))
+* **deps:** bump ruby from `84a821d` to `fd864f0` ([#106](https://github.com/99linesofcode/docker-collection/issues/106)) ([f728734](https://github.com/99linesofcode/docker-collection/commit/f728734fe4dbcf7c6c8196f874501598cc09efa7))
+
+
+
 ## [2.3.9](https://github.com/99linesofcode/docker-collection/compare/v2.3.8...v2.3.9) (2026-09-22)
 
 
@@ -46,15 +61,6 @@
 * **deps:** bump php from `e6e63eb` to `230b21a` ([#87](https://github.com/99linesofcode/docker-collection/issues/87)) ([e284da8](https://github.com/99linesofcode/docker-collection/commit/e284da87d92d8ed3fcbe51130b21414658652c28))
 * **deps:** bump ruby from `1f21fea` to `b276a71` ([ea84694](https://github.com/99linesofcode/docker-collection/commit/ea8469451601f05682091731d132c9ea464c8d7d))
 * **deps:** bump ruby from `727cace` to `1f21fea` ([#79](https://github.com/99linesofcode/docker-collection/issues/79)) ([c7a738f](https://github.com/99linesofcode/docker-collection/commit/c7a738fdc0ec1472bdd35d35aa60a3d6521935be))
-
-
-
-## [2.3.5](https://github.com/99linesofcode/docker-collection/compare/v2.3.4...v2.3.5) (2026-04-02)
-
-
-### Bug Fixes
-
-* **dependabot:** introduce dependency cooldown to mitigate supply chain attacks ([780c4e8](https://github.com/99linesofcode/docker-collection/commit/780c4e81f04b3a9a324a05bcb1dc3435b0a15c13))
 
 
 
