@@ -1,6 +1,11 @@
 # docker-collection
 
-This repository serves as a reference for my collection of Docker and Docker Compose files.
+This repository serves as a reference for my collection of Docker and Docker
+Compose files. The environments are three tiers:
+
+- **[docker-base](https://github.com/99linesofcode/docker-base)** — the shared services and the Ubuntu-LTS devcontainer. A wrapper pulls it in as the `base` submodule.
+- **Language wrappers** (`docker-php`, `docker-ruby`) — extend the base and add language-specific services. A project pulls a wrapper in as the `docker` submodule.
+- **Projects** — copy the wrapper's `docker-compose.yaml.dist` to their root as `docker-compose.yaml`.
 
 ## Configuration
 
